@@ -37,6 +37,6 @@ if (!function_exists('database_path')) {
      */
     function database_path($path = '')
     {
-        return app()->getRootPath() . 'database' . DIRECTORY_SEPARATOR . $path;
+        return app()->getRootPath() . 'database' . ($path ? DIRECTORY_SEPARATOR . ltrim($path, DIRECTORY_SEPARATOR) : '');
     }
 }

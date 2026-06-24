@@ -28,7 +28,7 @@ class Run extends Seed
         $this
             ->setName('seed:run')
             ->setDescription('Run database seeders')
-            ->addOption('--seed', '-s', InputOption::VALUE_REQUIRED, 'What is the name of the seeder?')
+            ->addOption('seed', '-s', InputOption::VALUE_REQUIRED, 'What is the name of the seeder?')
             ->setHelp(<<<EOT
                                 The <info>seed:run</info> command runs all available or individual seeders
 

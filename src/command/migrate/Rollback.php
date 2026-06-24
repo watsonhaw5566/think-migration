@@ -28,9 +28,9 @@ class Rollback extends Migrate
         $this
             ->setName('migrate:rollback')
             ->setDescription('Rollback the last or to a specific migration')
-            ->addOption('--target', '-t', InputOption::VALUE_REQUIRED, 'The version number to rollback to')
-            ->addOption('--date', '-d', InputOption::VALUE_REQUIRED, 'The date to rollback to')
-            ->addOption('--force', '-f', InputOption::VALUE_NONE, 'Force rollback to ignore breakpoints')
+            ->addOption('target', '-t', InputOption::VALUE_REQUIRED, 'The version number to rollback to')
+            ->addOption('date', '-d', InputOption::VALUE_REQUIRED, 'The date to rollback to')
+            ->addOption('force', '-f', InputOption::VALUE_NONE, 'Force rollback to ignore breakpoints')
             ->setHelp(<<<EOT
                 The <info>migrate:rollback</info> command reverts the last migration, or optionally up to a specific version
 

@@ -14,14 +14,12 @@ namespace think\migration\command\migrate;
 
 use InvalidArgumentException;
 use RuntimeException;
-use think\console\Command;
-use think\console\Input;
 use think\console\input\Argument as InputArgument;
 use think\console\input\Option as InputOption;
-use think\console\Output;
+use think\migration\command\Migrate;
 use think\migration\Creator;
 
-class Create extends Command
+class Create extends Migrate
 {
     /**
      * {@inheritdoc}

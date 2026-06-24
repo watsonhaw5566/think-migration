@@ -28,7 +28,7 @@ class Status extends Migrate
             ->setName('migrate:status')
             ->setDescription('Show migration status')
             ->addOption(
-                '--format',
+                'format',
                 '-f',
                 InputOption::VALUE_REQUIRED,
                 'The output format: text or json. Defaults to text.'

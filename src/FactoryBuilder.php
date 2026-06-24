@@ -141,9 +141,9 @@ class FactoryBuilder
      * @param array|mixed $states
      * @return $this
      */
-    public function states($states)
+    public function states(...$states)
     {
-        $this->activeStates = is_array($states) ? $states : func_get_args();
+        $this->activeStates = isset($states[0]) && is_array($states[0]) ? $states[0] : $states;
 
         return $this;
     }

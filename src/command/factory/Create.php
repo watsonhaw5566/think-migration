@@ -19,6 +19,8 @@ use Phinx\Util\Util;
 use RuntimeException;
 use think\console\Command;
 use think\console\input\Argument as InputArgument;
+use think\console\Input;
+use think\console\Output;
 
 class Create extends Command
 {
@@ -30,7 +32,7 @@ class Create extends Command
             ->addArgument('name', InputArgument::REQUIRED, 'What is the name of the model?');
     }
 
-    public function handle()
+    protected function execute(Input $input, Output $output)
     {
         $path = $this->getPath();
 
@@ -47,7 +49,7 @@ class Create extends Command
         }
 
         $path = realpath($path);
-        $className = $this->input->getArgument('name');
+        $className = $input->getArgument('name');
 
         if (!Util::isValidPhinxClassName($className)) {
             throw new InvalidArgumentException(sprintf(
@@ -74,7 +76,7 @@ class Create extends Command
             throw new RuntimeException(sprintf('The file "%s" could not be written to', $path));
         }
 
-        $this->output->writeln('<info>created</info> .' . str_replace(getcwd(), '', $filePath));
+        $output->writeln('<info>created</info> .' . str_replace(getcwd(), '', $filePath));
     }
 
     protected function getTemplate()
