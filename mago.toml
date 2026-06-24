@@ -23,6 +23,27 @@ integrations = ["symfony", "phpunit"]
 ambiguous-function-call = { enabled = false }
 literal-named-argument = { enabled = false }
 halstead = { effort-threshold = 7000 }
+identity-comparison = { enabled = true }
+strict-behavior = { enabled = true }
+# 风格类规则 — 宽松模式，不强制
+no-empty = { enabled = false }
+no-isset = { enabled = false }
+cyclomatic-complexity = { enabled = false }
+too-many-methods = { enabled = false }
+kan-defect = { enabled = false }
+excessive-parameter-list = { enabled = false }
+no-sprintf-concat = { enabled = false }
+no-multi-assignments = { enabled = false }
+prefer-arrow-function = { enabled = false }
+prefer-static-closure = { enabled = false }
+tagged-todo = { enabled = false }
+strict-types = { enabled = false }
+single-class-per-file = { enabled = false }
+assertion-style = { enabled = false }
+no-error-control-operator = { enabled = false }
+no-global = { enabled = false }
+no-else-clause = { enabled = false }
+no-redundant-use = { enabled = false }
 
 [analyzer]
 plugins = []
