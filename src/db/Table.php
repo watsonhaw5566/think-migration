@@ -78,9 +78,18 @@ class Table extends \Phinx\Db\Table
         return $this->setOption('collation', $collation);
     }
 
-    public function addSoftDelete()
+    /**
+     * 添加软删除字段
+     * @param string $type 字段类型：'timestamp'（默认，时间戳）或 'datetime'（日期时间）
+     * @return $this
+     */
+    public function addSoftDelete(string $type = 'timestamp')
     {
-        $this->addColumn(Column::timestamp('delete_time')->setNullable());
+        if ($type === 'datetime') {
+            $this->addColumn(Column::datetime('delete_time')->setNullable());
+        } else {
+            $this->addColumn(Column::timestamp('delete_time')->setNullable());
+        }
         return $this;
     }
 
@@ -109,6 +118,7 @@ class Table extends \Phinx\Db\Table
     }
 
     /**
+     * 添加时间戳字段（使用 timestamp 类型）
      * @param string $createdAt
      * @param string $updatedAt
      * @return $this
@@ -119,16 +129,40 @@ class Table extends \Phinx\Db\Table
             $this->addColumn($createdAt, 'timestamp', [
                 'null'     => false,
                 'default'  => 'CURRENT_TIMESTAMP',
-                'update'   => '',
                 'timezone' => $withTimezone,
             ]);
         }
         if ($updatedAt) {
             $this->addColumn($updatedAt, 'timestamp', [
                 'null'     => true,
-                'default'  => null,
-                'update'   => '',
+                'default'  => 'CURRENT_TIMESTAMP',
+                'update'   => 'CURRENT_TIMESTAMP',
                 'timezone' => $withTimezone,
+            ]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * 添加时间字段（使用 datetime 类型，提供更高精度）
+     * @param string $createdAt
+     * @param string $updatedAt
+     * @return $this
+     */
+    public function addDatetimes($createdAt = 'create_time', $updatedAt = 'update_time')
+    {
+        if ($createdAt) {
+            $this->addColumn($createdAt, 'datetime', [
+                'null'    => false,
+                'default' => 'CURRENT_TIMESTAMP',
+            ]);
+        }
+        if ($updatedAt) {
+            $this->addColumn($updatedAt, 'datetime', [
+                'null'    => true,
+                'default' => 'CURRENT_TIMESTAMP',
+                'update'  => 'CURRENT_TIMESTAMP',
             ]);
         }
 
@@ -154,14 +188,23 @@ class Table extends \Phinx\Db\Table
 
     /**
      * @param string $columnName
-     * @param null $newColumnType
-     * @param array $options
+     * @param mixed  $newColumnType
+     * @param array  $options
      * @return $this
      */
     public function changeColumn($columnName, $newColumnType = null, $options = [])
     {
         if ($columnName instanceof \Phinx\Db\Table\Column) {
             return parent::changeColumn($columnName->getName(), $columnName, $options);
+        }
+        if ($newColumnType instanceof \Phinx\Db\Table\Column) {
+            return parent::changeColumn($columnName, $newColumnType, $options);
+        }
+        if ($newColumnType === null) {
+            if (isset($options['type'])) {
+                return parent::changeColumn($columnName, $options['type'], $options);
+            }
+            throw new \InvalidArgumentException('changeColumn() requires a column type (either as second argument or in options[\'type\']).');
         }
         return parent::changeColumn($columnName, $newColumnType, $options);
     }

@@ -19,6 +19,34 @@ abstract class Command extends \think\console\Command
 {
     protected $adapter;
 
+    /** @var ConsoleInput|null */
+    protected ?ConsoleInput $symfonyInput = null;
+
+    /** @var ConsoleOutput|null */
+    protected ?ConsoleOutput $symfonyOutput = null;
+
+    /**
+     * 获取适配为 Symfony InputInterface 的输入对象
+     */
+    public function getSymfonyInput(): ConsoleInput
+    {
+        if ($this->symfonyInput === null) {
+            $this->symfonyInput = new ConsoleInput($this->input);
+        }
+        return $this->symfonyInput;
+    }
+
+    /**
+     * 获取适配为 Symfony OutputInterface 的输出对象
+     */
+    public function getSymfonyOutput(): ConsoleOutput
+    {
+        if ($this->symfonyOutput === null) {
+            $this->symfonyOutput = new ConsoleOutput($this->output);
+        }
+        return $this->symfonyOutput;
+    }
+
     public function getAdapter()
     {
         if (isset($this->adapter)) {
@@ -33,8 +61,8 @@ abstract class Command extends \think\console\Command
             $adapter = AdapterFactory::instance()->getWrapper('prefix', $adapter);
         }
 
-        $adapter->setInput($this->input);
-        $adapter->setOutput($this->output);
+        $adapter->setInput($this->getSymfonyInput());
+        $adapter->setOutput($this->getSymfonyOutput());
 
         $this->adapter = $adapter;
 

@@ -48,14 +48,15 @@ abstract class Seed extends Command
                     $fileNames[$class] = basename($filePath);
 
                     // load the seed file
-                    /** @noinspection PhpIncludeInspection */
                     require_once $filePath;
                     if (!class_exists($class)) {
                         throw new InvalidArgumentException(sprintf('Could not find class "%s" in file "%s"', $class, $filePath));
                     }
 
                     // instantiate it
-                    $seed = new $class($this->input, $this->output);
+                    $seed = new $class();
+                    $seed->setInput($this->getSymfonyInput());
+                    $seed->setOutput($this->getSymfonyOutput());
 
                     if (!($seed instanceof AbstractSeed)) {
                         throw new InvalidArgumentException(sprintf('The class "%s" in file "%s" must extend \Phinx\Seed\AbstractSeed', $class, $filePath));

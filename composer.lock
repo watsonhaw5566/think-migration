@@ -4,23 +4,78 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ce46ae9679bafdfb025219f946353f61",
+    "content-hash": "b5be21bf36a3477467189f1d95d08697",
     "packages": [
         {
-            "name": "cakephp/core",
-            "version": "4.6.3",
+            "name": "cakephp/chronos",
+            "version": "3.5.0",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.cloud.tencent.com/repository/composer/cakephp/core/4.6.3/cakephp-core-4.6.3.zip",
-                "reference": "c2f4dff110d41e475d1041f2abe236f1c62d0cd0",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/cakephp/chronos/3.5.0/cakephp-chronos-3.5.0.zip",
+                "reference": "e6e777b534244911566face8a5dbdbd7f7bda5a6",
                 "shasum": ""
             },
             "require": {
-                "cakephp/utility": "^4.0",
-                "php": ">=7.4.0"
+                "php": ">=8.1",
+                "psr/clock": "^1.0"
             },
             "provide": {
-                "psr/container-implementation": "^1.0 || ^2.0"
+                "psr/clock-implementation": "1.0"
+            },
+            "require-dev": {
+                "cakephp/cakephp-codesniffer": "^5.0",
+                "phpunit/phpunit": "^10.5.58 || ^11.5.3 || ^12.1.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Cake\\Chronos\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brian Nesbitt",
+                    "email": "brian@nesbot.com",
+                    "homepage": "http://nesbot.com"
+                },
+                {
+                    "name": "The CakePHP Team",
+                    "homepage": "https://cakephp.org"
+                }
+            ],
+            "description": "A simple API extension for DateTime.",
+            "homepage": "https://cakephp.org",
+            "keywords": [
+                "date",
+                "datetime",
+                "time"
+            ],
+            "support": {
+                "issues": "https://github.com/cakephp/chronos/issues",
+                "source": "https://github.com/cakephp/chronos"
+            },
+            "time": "2026-04-10T02:50:39+00:00"
+        },
+        {
+            "name": "cakephp/core",
+            "version": "5.3.6",
+            "dist": {
+                "type": "zip",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/cakephp/core/5.3.6/cakephp-core-5.3.6.zip",
+                "reference": "9c458b0e9322ec88bc4c758b33cde6a0abf49d12",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/utility": "^5.3.0",
+                "league/container": "^5.1",
+                "php": ">=8.2",
+                "psr/container": "^1.1 || ^2.0"
+            },
+            "provide": {
+                "psr/container-implementation": "^2.0"
             },
             "suggest": {
                 "cakephp/cache": "To use Configure::store() and restore().",
@@ -28,6 +83,11 @@
                 "league/container": "To use Container and ServiceProvider classes"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-5.next": "5.4.x-dev"
+                }
+            },
             "autoload": {
                 "files": [
                     "functions.php"
@@ -58,27 +118,38 @@
                 "issues": "https://github.com/cakephp/cakephp/issues",
                 "source": "https://github.com/cakephp/core"
             },
-            "time": "2023-10-21T13:30:46+00:00"
+            "time": "2026-05-15T03:31:14+00:00"
         },
         {
             "name": "cakephp/database",
-            "version": "4.6.3",
+            "version": "5.3.6",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.cloud.tencent.com/repository/composer/cakephp/database/4.6.3/cakephp-database-4.6.3.zip",
-                "reference": "7de9cbfc19fa202fdfab54352f94e49aaf15c300",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/cakephp/database/5.3.6/cakephp-database-5.3.6.zip",
+                "reference": "442d12bf0a1edeffc555a59de9f955cb0619c7ca",
                 "shasum": ""
             },
             "require": {
-                "cakephp/core": "^4.0",
-                "cakephp/datasource": "^4.0",
-                "php": ">=7.4.0"
+                "cakephp/chronos": "^3.3",
+                "cakephp/core": "^5.3.0",
+                "cakephp/datasource": "^5.3.0",
+                "php": ">=8.2",
+                "psr/log": "^3.0"
+            },
+            "require-dev": {
+                "cakephp/i18n": "^5.3.0",
+                "cakephp/log": "^5.3.0"
             },
             "suggest": {
-                "cakephp/i18n": "If you are using locale-aware datetime formats or Chronos types.",
+                "cakephp/i18n": "If you are using locale-aware datetime formats.",
                 "cakephp/log": "If you want to use query logging without providing a logger yourself."
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-5.next": "5.4.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Cake\\Database\\": "."
@@ -108,22 +179,26 @@
                 "issues": "https://github.com/cakephp/cakephp/issues",
                 "source": "https://github.com/cakephp/database"
             },
-            "time": "2025-10-30T02:41:56+00:00"
+            "time": "2026-05-21T19:38:13+00:00"
         },
         {
             "name": "cakephp/datasource",
-            "version": "4.6.3",
+            "version": "5.3.6",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.cloud.tencent.com/repository/composer/cakephp/datasource/4.6.3/cakephp-datasource-4.6.3.zip",
-                "reference": "72a36edbf99a5364211ca0e081f878ba68eb2c99",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/cakephp/datasource/5.3.6/cakephp-datasource-5.3.6.zip",
+                "reference": "b768f0c0bf0fca815f83c4caef14e7fbb2409bf5",
                 "shasum": ""
             },
             "require": {
-                "cakephp/core": "^4.0",
-                "php": ">=7.4.0",
-                "psr/log": "^1.0 || ^2.0",
-                "psr/simple-cache": "^1.0 || ^2.0"
+                "cakephp/core": "^5.3.0",
+                "php": ">=8.2",
+                "psr/simple-cache": "^2.0 || ^3.0"
+            },
+            "require-dev": {
+                "cakephp/cache": "^5.3.0",
+                "cakephp/collection": "^5.3.0",
+                "cakephp/utility": "^5.3.0"
             },
             "suggest": {
                 "cakephp/cache": "If you decide to use Query caching.",
@@ -131,6 +206,11 @@
                 "cakephp/utility": "If you decide to use EntityTrait."
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-5.next": "5.4.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Cake\\Datasource\\": "."
@@ -160,26 +240,31 @@
                 "issues": "https://github.com/cakephp/cakephp/issues",
                 "source": "https://github.com/cakephp/datasource"
             },
-            "time": "2024-11-19T19:41:00+00:00"
+            "time": "2026-05-20T10:27:33+00:00"
         },
         {
             "name": "cakephp/utility",
-            "version": "4.6.3",
+            "version": "5.3.6",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.cloud.tencent.com/repository/composer/cakephp/utility/4.6.3/cakephp-utility-4.6.3.zip",
-                "reference": "708929115e5b400e1b5b76d8120ca2e51e2de199",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/cakephp/utility/5.3.6/cakephp-utility-5.3.6.zip",
+                "reference": "4c703a010b9d955fed44731669e35d3043425cc7",
                 "shasum": ""
             },
             "require": {
-                "cakephp/core": "^4.0",
-                "php": ">=7.4.0"
+                "cakephp/core": "^5.3.0",
+                "php": ">=8.2"
             },
             "suggest": {
                 "ext-intl": "To use Text::transliterate() or Text::slug()",
                 "lib-ICU": "To use Text::transliterate() or Text::slug()"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-5.next": "5.4.x-dev"
+                }
+            },
             "autoload": {
                 "files": [
                     "bootstrap.php"
@@ -213,7 +298,121 @@
                 "issues": "https://github.com/cakephp/cakephp/issues",
                 "source": "https://github.com/cakephp/utility"
             },
-            "time": "2024-06-23T00:11:14+00:00"
+            "time": "2026-05-21T19:38:13+00:00"
+        },
+        {
+            "name": "league/container",
+            "version": "5.2.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/league/container/5.2.0/league-container-5.2.0.zip",
+                "reference": "58accbc032f0090a9bd08326f93062c5a658b2c5",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1",
+                "psr/container": "^2.0.2",
+                "psr/event-dispatcher": "^1.0"
+            },
+            "provide": {
+                "psr/container-implementation": "^1.0"
+            },
+            "replace": {
+                "orno/di": "~2.0"
+            },
+            "require-dev": {
+                "nette/php-generator": "^4.1",
+                "nikic/php-parser": "^5.0",
+                "phpstan/phpstan": "^2.1.11",
+                "phpunit/phpunit": "^10.5.45|^11.5.15|^12.0",
+                "roave/security-advisories": "dev-latest",
+                "scrutinizer/ocular": "^1.9",
+                "squizlabs/php_codesniffer": "^3.9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev",
+                    "dev-2.x": "2.x-dev",
+                    "dev-3.x": "3.x-dev",
+                    "dev-4.x": "4.x-dev",
+                    "dev-5.x": "5.x-dev",
+                    "dev-master": "5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Container\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Phil Bennett",
+                    "email": "mail@philbennett.co.uk",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A fast and intuitive dependency injection container.",
+            "homepage": "https://github.com/thephpleague/container",
+            "keywords": [
+                "container",
+                "dependency",
+                "di",
+                "injection",
+                "league",
+                "provider",
+                "service"
+            ],
+            "support": {
+                "issues": "https://github.com/thephpleague/container/issues",
+                "source": "https://github.com/thephpleague/container/tree/5.2.0"
+            },
+            "time": "2026-03-19T18:52:39+00:00"
+        },
+        {
+            "name": "psr/clock",
+            "version": "1.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/psr/clock/1.0.0/psr-clock-1.0.0.zip",
+                "reference": "e41a24703d4560fd0acb709162f73b8adfc3aa0d",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0 || ^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Clock\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for reading the clock.",
+            "homepage": "https://github.com/php-fig/clock",
+            "keywords": [
+                "clock",
+                "now",
+                "psr",
+                "psr-20",
+                "time"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/clock/issues",
+                "source": "https://github.com/php-fig/clock/tree/1.0.0"
+            },
+            "time": "2022-11-25T14:36:26+00:00"
         },
         {
             "name": "psr/container",
@@ -261,6 +460,50 @@
                 "source": "https://github.com/php-fig/container/tree/2.0.2"
             },
             "time": "2021-11-05T16:47:00+00:00"
+        },
+        {
+            "name": "psr/event-dispatcher",
+            "version": "1.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/psr/event-dispatcher/1.0.0/psr-event-dispatcher-1.0.0.zip",
+                "reference": "dbefd12671e8a14ec7f180cab83036ed26714bb0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\EventDispatcher\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Standard interfaces for event handling.",
+            "keywords": [
+                "events",
+                "psr",
+                "psr-14"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/event-dispatcher/issues",
+                "source": "https://github.com/php-fig/event-dispatcher/tree/1.0.0"
+            },
+            "time": "2019-01-08T18:20:26+00:00"
         },
         {
             "name": "psr/http-message",
@@ -311,11 +554,11 @@
         },
         {
             "name": "psr/log",
-            "version": "2.0.0",
+            "version": "3.0.2",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.cloud.tencent.com/repository/composer/psr/log/2.0.0/psr-log-2.0.0.zip",
-                "reference": "ef29f6d262798707a9edd554e2b82517ef3a9376",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/psr/log/3.0.2/psr-log-3.0.2.zip",
+                "reference": "f16e1d5863e37f8d8c2a01719f5b34baa2b714d3",
                 "shasum": ""
             },
             "require": {
@@ -324,7 +567,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "3.x-dev"
                 }
             },
             "autoload": {
@@ -349,17 +592,17 @@
                 "psr-3"
             ],
             "support": {
-                "source": "https://github.com/php-fig/log/tree/2.0.0"
+                "source": "https://github.com/php-fig/log/tree/3.0.2"
             },
-            "time": "2021-07-14T16:41:46+00:00"
+            "time": "2024-09-11T13:17:53+00:00"
         },
         {
             "name": "psr/simple-cache",
-            "version": "2.0.0",
+            "version": "3.0.0",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.cloud.tencent.com/repository/composer/psr/simple-cache/2.0.0/psr-simple-cache-2.0.0.zip",
-                "reference": "8707bf3cea6f710bf6ef05491234e3ab06f6432a",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/psr/simple-cache/3.0.0/psr-simple-cache-3.0.0.zip",
+                "reference": "764e0b3939f5ca87cb904f570ef9be2d78a07865",
                 "shasum": ""
             },
             "require": {
@@ -368,7 +611,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "3.0.x-dev"
                 }
             },
             "autoload": {
@@ -394,33 +637,34 @@
                 "simple-cache"
             ],
             "support": {
-                "source": "https://github.com/php-fig/simple-cache/tree/2.0.0"
+                "source": "https://github.com/php-fig/simple-cache/tree/3.0.0"
             },
-            "time": "2021-10-29T13:22:09+00:00"
+            "time": "2021-10-29T13:26:27+00:00"
         },
         {
             "name": "robmorgan/phinx",
-            "version": "0.13.4",
+            "version": "0.16.11",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.cloud.tencent.com/repository/composer/robmorgan/phinx/0.13.4/robmorgan-phinx-0.13.4.zip",
-                "reference": "18e06e4a2b18947663438afd2f467e17c62e867d",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/robmorgan/phinx/0.16.11/robmorgan-phinx-0.16.11.zip",
+                "reference": "a03014fea316ba021fc0776982e5bed2d10228d4",
                 "shasum": ""
             },
             "require": {
-                "cakephp/database": "^4.0",
-                "php": ">=7.2",
-                "psr/container": "^1.0 || ^2.0",
-                "symfony/config": "^3.4|^4.0|^5.0|^6.0",
-                "symfony/console": "^3.4|^4.0|^5.0|^6.0"
+                "cakephp/database": "^5.0.2",
+                "composer-runtime-api": "^2.0",
+                "php-64bit": ">=8.1",
+                "psr/container": "^1.1|^2.0",
+                "symfony/config": "^4.0|^5.0|^6.0|^7.0|^8.0",
+                "symfony/console": "^6.0|^7.0|^8.0"
             },
             "require-dev": {
-                "cakephp/cakephp-codesniffer": "^4.0",
+                "cakephp/cakephp-codesniffer": "^5.0",
+                "cakephp/i18n": "^5.0",
                 "ext-json": "*",
                 "ext-pdo": "*",
-                "phpunit/phpunit": "^8.5|^9.3",
-                "sebastian/comparator": ">=1.2.3",
-                "symfony/yaml": "^3.4|^4.0|^5.0"
+                "phpunit/phpunit": "^10.5",
+                "symfony/yaml": "^4.0|^5.0|^6.0|^7.0|^8.0"
             },
             "suggest": {
                 "ext-json": "Install if using JSON configuration format",
@@ -474,35 +718,35 @@
             ],
             "support": {
                 "issues": "https://github.com/cakephp/phinx/issues",
-                "source": "https://github.com/cakephp/phinx/tree/0.13.4"
+                "source": "https://github.com/cakephp/phinx/tree/0.16.11"
             },
-            "time": "2023-01-07T00:42:55+00:00"
+            "time": "2026-03-15T00:04:32+00:00"
         },
         {
             "name": "symfony/config",
-            "version": "v6.4.37",
+            "version": "v7.4.10",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.cloud.tencent.com/repository/composer/symfony/config/v6.4.37/symfony-config-v6.4.37.zip",
-                "reference": "ee615e8352db9c5f0b7b149154a3f654dc72042b",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/symfony/config/v7.4.10/symfony-config-v7.4.10.zip",
+                "reference": "d91b6c7cd2a8c9a9c2b8d26c8f5ed48edf99ef57",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1",
+                "php": ">=8.2",
                 "symfony/deprecation-contracts": "^2.5|^3",
-                "symfony/filesystem": "^5.4|^6.0|^7.0",
+                "symfony/filesystem": "^7.1|^8.0",
                 "symfony/polyfill-ctype": "~1.8"
             },
             "conflict": {
-                "symfony/finder": "<5.4",
+                "symfony/finder": "<6.4",
                 "symfony/service-contracts": "<2.5"
             },
             "require-dev": {
-                "symfony/event-dispatcher": "^5.4|^6.0|^7.0",
-                "symfony/finder": "^5.4|^6.0|^7.0",
-                "symfony/messenger": "^5.4|^6.0|^7.0",
+                "symfony/event-dispatcher": "^6.4|^7.0|^8.0",
+                "symfony/finder": "^6.4|^7.0|^8.0",
+                "symfony/messenger": "^6.4|^7.0|^8.0",
                 "symfony/service-contracts": "^2.5|^3",
-                "symfony/yaml": "^5.4|^6.0|^7.0"
+                "symfony/yaml": "^6.4|^7.0|^8.0"
             },
             "type": "library",
             "autoload": {
@@ -529,48 +773,48 @@
             "description": "Helps you find, load, combine, autofill and validate configuration values of any kind",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/config/tree/v6.4.37"
+                "source": "https://github.com/symfony/config/tree/v7.4.10"
             },
-            "time": "2026-04-29T10:19:30+00:00"
+            "time": "2026-05-03T14:20:49+00:00"
         },
         {
             "name": "symfony/console",
-            "version": "v6.4.41",
+            "version": "v7.4.13",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.cloud.tencent.com/repository/composer/symfony/console/v6.4.41/symfony-console-v6.4.41.zip",
-                "reference": "d21b17ed158e79180fac3895ff751707970eeb57",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/symfony/console/v7.4.13/symfony-console-v7.4.13.zip",
+                "reference": "85095d2573eaefaf35e40b9513a9bf09f72cd217",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1",
+                "php": ">=8.2",
                 "symfony/deprecation-contracts": "^2.5|^3",
                 "symfony/polyfill-mbstring": "~1.0",
                 "symfony/service-contracts": "^2.5|^3",
-                "symfony/string": "^5.4|^6.0|^7.0"
+                "symfony/string": "^7.2|^8.0"
             },
             "conflict": {
-                "symfony/dependency-injection": "<5.4",
-                "symfony/dotenv": "<5.4",
-                "symfony/event-dispatcher": "<5.4",
-                "symfony/lock": "<5.4",
-                "symfony/process": "<5.4"
+                "symfony/dependency-injection": "<6.4",
+                "symfony/dotenv": "<6.4",
+                "symfony/event-dispatcher": "<6.4",
+                "symfony/lock": "<6.4",
+                "symfony/process": "<6.4"
             },
             "provide": {
                 "psr/log-implementation": "1.0|2.0|3.0"
             },
             "require-dev": {
                 "psr/log": "^1|^2|^3",
-                "symfony/config": "^5.4|^6.0|^7.0",
-                "symfony/dependency-injection": "^5.4|^6.0|^7.0",
-                "symfony/event-dispatcher": "^5.4|^6.0|^7.0",
-                "symfony/http-foundation": "^6.4|^7.0",
-                "symfony/http-kernel": "^6.4|^7.0",
-                "symfony/lock": "^5.4|^6.0|^7.0",
-                "symfony/messenger": "^5.4|^6.0|^7.0",
-                "symfony/process": "^5.4|^6.0|^7.0",
-                "symfony/stopwatch": "^5.4|^6.0|^7.0",
-                "symfony/var-dumper": "^5.4|^6.0|^7.0"
+                "symfony/config": "^6.4|^7.0|^8.0",
+                "symfony/dependency-injection": "^6.4|^7.0|^8.0",
+                "symfony/event-dispatcher": "^6.4|^7.0|^8.0",
+                "symfony/http-foundation": "^6.4|^7.0|^8.0",
+                "symfony/http-kernel": "^6.4|^7.0|^8.0",
+                "symfony/lock": "^6.4|^7.0|^8.0",
+                "symfony/messenger": "^6.4|^7.0|^8.0",
+                "symfony/process": "^6.4|^7.0|^8.0",
+                "symfony/stopwatch": "^6.4|^7.0|^8.0",
+                "symfony/var-dumper": "^6.4|^7.0|^8.0"
             },
             "type": "library",
             "autoload": {
@@ -603,9 +847,9 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v6.4.41"
+                "source": "https://github.com/symfony/console/tree/v7.4.13"
             },
-            "time": "2026-05-24T08:48:41+00:00"
+            "time": "2026-05-24T08:56:14+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -699,50 +943,6 @@
                 "source": "https://github.com/symfony/filesystem/tree/v7.4.11"
             },
             "time": "2026-05-11T16:38:44+00:00"
-        },
-        {
-            "name": "symfony/finder",
-            "version": "v7.4.8",
-            "dist": {
-                "type": "zip",
-                "url": "https://mirrors.cloud.tencent.com/repository/composer/symfony/finder/v7.4.8/symfony-finder-v7.4.8.zip",
-                "reference": "e0be088d22278583a82da281886e8c3592fbf149",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.2"
-            },
-            "require-dev": {
-                "symfony/filesystem": "^6.4|^7.0|^8.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Finder\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Finds files and directories via an intuitive fluent interface",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/finder/tree/v7.4.8"
-            },
-            "time": "2026-03-24T13:12:05+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -1257,11 +1457,11 @@
         },
         {
             "name": "topthink/think-orm",
-            "version": "v4.0.46",
+            "version": "v4.0.51",
             "dist": {
                 "type": "zip",
-                "url": "https://mirrors.cloud.tencent.com/repository/composer/topthink/think-orm/v4.0.46/topthink-think-orm-v4.0.46.zip",
-                "reference": "4bb0a5679a97db8de1c0eb02bbbe179cb3afd901",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/topthink/think-orm/v4.0.51/topthink-think-orm-v4.0.51.zip",
+                "reference": "46abe2f824eb3bcb117d4c0ce93b203b592b79f7",
                 "shasum": ""
             },
             "require": {
@@ -1269,7 +1469,7 @@
                 "ext-pdo": "*",
                 "php": ">=8.0.0",
                 "psr/log": ">=1.0",
-                "psr/simple-cache": ">=1.0",
+                "psr/simple-cache": "^3.0",
                 "topthink/think-helper": "^3.1",
                 "topthink/think-validate": "^3.0"
             },
@@ -1305,9 +1505,9 @@
             ],
             "support": {
                 "issues": "https://github.com/top-think/think-orm/issues",
-                "source": "https://github.com/top-think/think-orm/tree/v4.0.46"
+                "source": "https://github.com/top-think/think-orm/tree/v4.0.51"
             },
-            "time": "2025-06-26T06:05:35+00:00"
+            "time": "2025-12-18T13:11:52+00:00"
         },
         {
             "name": "topthink/think-validate",
@@ -3508,6 +3708,50 @@
                 "source": "https://github.com/Seldaek/signal-handler/tree/2.0.2"
             },
             "time": "2023-09-03T09:24:00+00:00"
+        },
+        {
+            "name": "symfony/finder",
+            "version": "v7.4.8",
+            "dist": {
+                "type": "zip",
+                "url": "https://mirrors.cloud.tencent.com/repository/composer/symfony/finder/v7.4.8/symfony-finder-v7.4.8.zip",
+                "reference": "e0be088d22278583a82da281886e8c3592fbf149",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "require-dev": {
+                "symfony/filesystem": "^6.4|^7.0|^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Finder\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Finds files and directories via an intuitive fluent interface",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/finder/tree/v7.4.8"
+            },
+            "time": "2026-03-24T13:12:05+00:00"
         },
         {
             "name": "symfony/polyfill-php73",

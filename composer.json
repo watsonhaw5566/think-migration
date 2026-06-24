@@ -1,15 +1,18 @@
 {
-  "name": "topthink/think-migration",
+  "name": "watsonhaw/think-migration",
   "authors": [
     {
       "name": "yunwuxin",
       "email": "448901948@qq.com"
+    },
+    {
+      "name": "watsonhaw",
+      "email": "watsonhaw@hotmail.com"
     }
   ],
   "license": "Apache-2.0",
   "autoload": {
     "psr-4": {
-      "Phinx\\": "phinx",
       "think\\migration\\": "src"
     }
   },
@@ -20,9 +23,7 @@
   },
   "require": {
     "php": ">=8.0",
-    "robmorgan/phinx": "^0.13.4",
-    "symfony/filesystem": "^5.4 || ^6.0 || ^7.0",
-    "symfony/finder": "^5.4 || ^6.0 || ^7.0",
+    "robmorgan/phinx": "^0.16.0",
     "topthink/framework": "^8.0",
     "topthink/think-helper": "^3.0.3"
   },
@@ -41,13 +42,7 @@
     "test": "phpunit",
     "lint": "mago lint",
     "format": "mago format",
-    "analyze": "mago analyze",
-    "post-install-cmd": [
-      "think\\migration\\UsePhinx::run"
-    ],
-    "post-update-cmd": [
-      "think\\migration\\UsePhinx::run"
-    ]
+    "analyze": "mago analyze"
   },
   "extra": {
     "think": {

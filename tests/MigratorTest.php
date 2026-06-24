@@ -20,7 +20,7 @@ final class MigratorTest extends TestCase
             'memory' => true,
         ]);
 
-        $this->migrator = new Migrator('test_migration', time());
+        $this->migrator = new Migrator('test_migration', (int) date('YmdHis'));
 
         $reflection = new \ReflectionClass($this->migrator);
         $parentRef = $reflection->getParentClass();
