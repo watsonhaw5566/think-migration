@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace think\migration;
 
@@ -347,18 +348,28 @@ class FactoryBuilder
      */
     protected function expandAttributes(array $attributes)
     {
-        foreach ($attributes as &$attribute) {
-            if (is_callable($attribute) && !is_string($attribute) && !is_array($attribute)) {
-                $attribute = $attribute($attributes);
-            }
+        static $depth = 0;
+        if ($depth > 10) {
+            throw new InvalidArgumentException('Possible infinite recursion detected in factory definitions.');
+        }
+        ++$depth;
 
-            if ($attribute instanceof static) {
-                $attribute = $attribute->create()->getKey();
-            }
+        try {
+            foreach ($attributes as &$attribute) {
+                if (is_callable($attribute) && !is_string($attribute) && !is_array($attribute)) {
+                    $attribute = $attribute($attributes);
+                }
 
-            if ($attribute instanceof Model) {
-                $attribute = $attribute->getKey();
+                if ($attribute instanceof static) {
+                    $attribute = $attribute->create()->getKey();
+                }
+
+                if ($attribute instanceof Model) {
+                    $attribute = $attribute->getKey();
+                }
             }
+        } finally {
+            --$depth;
         }
 
         return $attributes;

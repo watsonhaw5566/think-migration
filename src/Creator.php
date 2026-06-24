@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace think\migration;
 
@@ -48,8 +49,8 @@ class Creator
             'MigratorClass' => $className,
         ]);
 
-        if (false === file_put_contents($filePath, $contents)) {
-            throw new RuntimeException(sprintf('The file "%s" could not be written to', $path));
+        if (false === file_put_contents($filePath, $contents, LOCK_EX)) {
+            throw new RuntimeException(sprintf('The file "%s" could not be written to', $filePath));
         }
 
         return $filePath;

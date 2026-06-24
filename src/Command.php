@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -64,16 +65,26 @@ abstract class Command extends \think\console\Command
                 'table_prefix' => $config['prefix'],
             ];
         } else {
+            $typeParts = explode(',', (string) $config['type']);
+            $hostParts = explode(',', (string) $config['hostname']);
+            $nameParts = explode(',', (string) $config['database']);
+            $userParts = explode(',', (string) $config['username']);
+            $passParts = explode(',', (string) $config['password']);
+            $portParts = explode(',', (string) $config['hostport']);
+            $charsetParts = explode(',', (string) $config['charset']);
+            $suffixParts = explode(',', (string) ($config['suffix'] ?? ''));
+            $prefixParts = explode(',', (string) $config['prefix']);
+
             $dbConfig = [
-                'adapter'      => explode(',', $config['type'])[0],
-                'host'         => explode(',', $config['hostname'])[0],
-                'name'         => explode(',', $config['database'])[0],
-                'user'         => explode(',', $config['username'])[0],
-                'pass'         => explode(',', $config['password'])[0],
-                'port'         => explode(',', $config['hostport'])[0],
-                'charset'      => explode(',', $config['charset'])[0],
-                'suffix'       => explode(',', $config['suffix'] ?? '')[0],
-                'table_prefix' => explode(',', $config['prefix'])[0],
+                'adapter'      => $typeParts[0] ?? '',
+                'host'         => $hostParts[0] ?? '',
+                'name'         => $nameParts[0] ?? '',
+                'user'         => $userParts[0] ?? '',
+                'pass'         => $passParts[0] ?? '',
+                'port'         => $portParts[0] ?? '',
+                'charset'      => $charsetParts[0] ?? '',
+                'suffix'       => $suffixParts[0] ?? '',
+                'table_prefix' => $prefixParts[0] ?? '',
             ];
         }
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -27,6 +28,10 @@ class Service extends \think\Service
 
     public function boot()
     {
+        if (!$this->app->runningInConsole()) {
+            return;
+        }
+
         $this->app->bind(FakerGenerator::class, function () {
             return FakerFactory::create($this->app->config->get('app.faker_locale', 'zh_CN'));
         });

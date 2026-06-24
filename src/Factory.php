@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace think\migration;
 
@@ -257,8 +258,11 @@ class Factory implements ArrayAccess
         $factory = $this;
 
         if (is_dir($path)) {
-            foreach (glob($path . '*.php') as $file) {
-                require $file;
+            $files = glob($path . '*.php');
+            if ($files !== false) {
+                foreach ($files as $file) {
+                    require $file;
+                }
             }
         }
 
