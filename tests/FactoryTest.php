@@ -158,6 +158,38 @@ $GLOBALS["__factory_loaded"] = true;
         $this->assertSame($this->factory, $result);
     }
 
+    public function testLoadFromDirectoryWithoutTrailingSeparator(): void
+    {
+        $tmpDir = sys_get_temp_dir() . '/factory_test_no_sep_' . uniqid();
+        mkdir($tmpDir, 0755, true);
+
+        $factoryFile = $tmpDir . '/factory_definition_' . time() . '.php';
+        file_put_contents($factoryFile, '<?php
+$GLOBALS["__factory_no_sep_loaded"] = true;
+');
+
+        // Important: no trailing separator
+        $this->factory->load($tmpDir);
+
+        $this->assertTrue($GLOBALS['__factory_no_sep_loaded'], 'Files should be found even without trailing directory separator');
+
+        unset($GLOBALS['__factory_no_sep_loaded']);
+        unlink($factoryFile);
+        rmdir($tmpDir);
+    }
+
+    public function testLoadIsFluent(): void
+    {
+        $tmpDir = sys_get_temp_dir() . '/factory_test_fluent_' . uniqid();
+        mkdir($tmpDir, 0755, true);
+
+        $result = $this->factory->load($tmpDir);
+
+        $this->assertSame($this->factory, $result);
+
+        rmdir($tmpDir);
+    }
+
     public function testArrayAccessOffsetExists(): void
     {
         $this->factory->define(FakeEntity::class, function () {

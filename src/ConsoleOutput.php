@@ -144,6 +144,11 @@ class ConsoleOutput implements OutputInterface
         return $this->getVerbosity() >= self::VERBOSITY_DEBUG;
     }
 
+    public function hasVerbosity(int $level): bool
+    {
+        return $this->getVerbosity() >= $level;
+    }
+
     public function setDecorated(bool $decorated): void
     {
         if (method_exists($this->output, 'setDecorated')) {

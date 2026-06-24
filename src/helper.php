@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types = 1);
-
+use think\App;
 use think\migration\Factory;
 use think\migration\FactoryBuilder;
 
@@ -9,15 +8,14 @@ if (!function_exists('factory')) {
     /**
      * Create a model factory builder for a given class, name, and amount.
      *
-     * @param mixed  class|class,name|class,amount|class,name,amount
+     * @param mixed ...$arguments  class|class,name|class,amount|class,name,amount
      * @return FactoryBuilder
      */
-    function factory()
+    function factory(mixed ...$arguments)
     {
+        $app = function_exists('app') ? app() : App::getInstance();
         /** @var Factory $factory */
-        $factory = app(Factory::class);
-
-        $arguments = func_get_args();
+        $factory = $app->make(Factory::class);
 
         if (isset($arguments[1]) && is_string($arguments[1])) {
             return $factory->of($arguments[0], $arguments[1])->times($arguments[2] ?? null);
@@ -37,6 +35,7 @@ if (!function_exists('database_path')) {
      */
     function database_path($path = '')
     {
-        return app()->getRootPath() . 'database' . ($path ? DIRECTORY_SEPARATOR . ltrim($path, DIRECTORY_SEPARATOR) : '');
+        $app = function_exists('app') ? app() : App::getInstance();
+        return $app->getRootPath() . 'database' . ($path ? DIRECTORY_SEPARATOR . ltrim($path, DIRECTORY_SEPARATOR) : '');
     }
 }

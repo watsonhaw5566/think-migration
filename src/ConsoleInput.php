@@ -122,7 +122,16 @@ class ConsoleInput implements InputInterface
 
     public function hasOption(string $name): bool
     {
-        return $this->input->hasOption($name);
+        $reflection = new \ReflectionObject($this->input);
+        if ($reflection->hasProperty('definition')) {
+            $prop = $reflection->getProperty('definition');
+            $prop->setAccessible(true);
+            $definition = $prop->getValue($this->input);
+            if ($definition !== null) {
+                return $definition->hasOption($name);
+            }
+        }
+        return false;
     }
 
     public function isInteractive(): bool
@@ -168,9 +177,9 @@ class ConsoleInput implements InputInterface
 
     private function convertArgument(SymfonyInputArgument $symfonyArg): ThinkInputArgument
     {
-        $mode = 0;
+        $mode = ThinkInputArgument::OPTIONAL;
         if ($symfonyArg->isRequired()) {
-            $mode |= ThinkInputArgument::REQUIRED;
+            $mode = ThinkInputArgument::REQUIRED;
         }
         if ($symfonyArg->isArray()) {
             $mode |= ThinkInputArgument::IS_ARRAY;
@@ -200,12 +209,14 @@ class ConsoleInput implements InputInterface
             $mode = ThinkInputOption::VALUE_NONE;
         }
 
+        $default = ($mode === ThinkInputOption::VALUE_NONE) ? null : $symfonyOpt->getDefault();
+
         return new ThinkInputOption(
             $symfonyOpt->getName(),
             $symfonyOpt->getShortcut(),
             $mode,
             $symfonyOpt->getDescription() ?? '',
-            $symfonyOpt->getDefault()
+            $default
         );
     }
 }

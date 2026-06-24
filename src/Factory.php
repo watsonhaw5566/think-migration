@@ -261,7 +261,7 @@ class Factory implements ArrayAccess
         $factory = $this;
 
         if (is_dir($path)) {
-            $files = glob($path . '*.php');
+            $files = glob(rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '*.php');
             if ($files !== false) {
                 foreach ($files as $file) {
                     require $file;

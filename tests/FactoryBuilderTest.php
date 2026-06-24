@@ -243,6 +243,94 @@ final class FactoryBuilderTest extends TestCase
 
         $this->assertSame($builder, $result);
     }
+
+    public function testStatesWithSingleStateAsArray(): void
+    {
+        $definitions = [
+            FakeEntity::class => [
+                'default' => function () {
+                    return ['name' => 'Default User'];
+                }
+            ]
+        ];
+        $states = [
+            FakeEntity::class => [
+                'suspended' => ['suspended' => true]
+            ]
+        ];
+
+        $builder = new FactoryBuilder(FakeEntity::class, 'default', $definitions, $states, [], [], $this->faker);
+        $result = $builder->states(['suspended'])->raw();
+
+        $this->assertTrue($result['suspended']);
+    }
+
+    public function testStatesWithMultipleStates(): void
+    {
+        $definitions = [
+            FakeEntity::class => [
+                'default' => function () {
+                    return ['name' => 'User'];
+                }
+            ]
+        ];
+        $states = [
+            FakeEntity::class => [
+                'verified' => ['verified' => true],
+                'banned' => ['banned' => true]
+            ]
+        ];
+
+        $builder = new FactoryBuilder(FakeEntity::class, 'default', $definitions, $states, [], [], $this->faker);
+        $result = $builder->states('verified', 'banned')->raw();
+
+        $this->assertTrue($result['verified']);
+        $this->assertTrue($result['banned']);
+    }
+
+    public function testStatesWithArrayContainingMultipleStates(): void
+    {
+        $definitions = [
+            FakeEntity::class => [
+                'default' => function () {
+                    return ['name' => 'User'];
+                }
+            ]
+        ];
+        $states = [
+            FakeEntity::class => [
+                'verified' => ['verified' => true],
+                'banned' => ['banned' => true]
+            ]
+        ];
+
+        $builder = new FactoryBuilder(FakeEntity::class, 'default', $definitions, $states, [], [], $this->faker);
+        $result = $builder->states(['verified', 'banned'])->raw();
+
+        $this->assertTrue($result['verified']);
+        $this->assertTrue($result['banned']);
+    }
+
+    public function testStatesMethodIsFluent(): void
+    {
+        $definitions = [
+            FakeEntity::class => [
+                'default' => function () {
+                    return ['name' => 'Test'];
+                }
+            ]
+        ];
+        $states = [
+            FakeEntity::class => [
+                'admin' => ['role' => 'admin']
+            ]
+        ];
+
+        $builder = new FactoryBuilder(FakeEntity::class, 'default', $definitions, $states, [], [], $this->faker);
+        $result = $builder->states('admin');
+
+        $this->assertSame($builder, $result);
+    }
 }
 
 class FakeEntity
