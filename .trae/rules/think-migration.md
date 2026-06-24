@@ -9,3 +9,7 @@ alwaysApply: true
 Thinkphp 自定义指令文档在 https://doc.thinkphp.cn/v8_0/create_php_think.html
 
 PHP代码质量检查(宽松)、格式化、分析使用 Mago,文档在 https://mago.carthage.software/1.30.0/en/guide/getting-started/
+
+语法检查使用: mago lint
+格式化使用: mago format
+分析使用: mago analyze
