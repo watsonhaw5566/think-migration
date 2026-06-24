@@ -27,7 +27,7 @@ final class ConsoleInputTest extends TestCase
         $consoleInput = new ConsoleInput($thinkInput);
 
         $definition = new InputDefinition([
-            new InputOption('connection', 'c', InputOption::VALUE_OPTIONAL, 'The connection to use'),
+            new InputOption('connection', 'c', InputOption::VALUE_OPTIONAL, 'The connection to use')
         ]);
 
         $consoleInput->bind($definition);
@@ -41,7 +41,7 @@ final class ConsoleInputTest extends TestCase
         $consoleInput = new ConsoleInput($thinkInput);
 
         $definition = new InputDefinition([
-            new InputOption('verbose', 'v', InputOption::VALUE_NONE, 'Verbose output'),
+            new InputOption('verbose', 'v', InputOption::VALUE_NONE, 'Verbose output')
         ]);
 
         // Should NOT throw an exception about "connection" option not existing
@@ -57,8 +57,11 @@ final class ConsoleInputTest extends TestCase
         $consoleInput = new ConsoleInput($thinkInput);
 
         $definition = new InputDefinition([
-            new \Symfony\Component\Console\Input\InputArgument('name', \Symfony\Component\Console\Input\InputArgument::OPTIONAL),
-            new InputOption('dry-run', null, InputOption::VALUE_NONE, 'Run in dry mode'),
+            new \Symfony\Component\Console\Input\InputArgument(
+                'name',
+                \Symfony\Component\Console\Input\InputArgument::OPTIONAL
+            ),
+            new InputOption('dry-run', null, InputOption::VALUE_NONE, 'Run in dry mode')
         ]);
         $consoleInput->bind($definition);
 
@@ -74,7 +77,7 @@ final class ConsoleInputTest extends TestCase
         $consoleInput = new ConsoleInput($thinkInput);
 
         $definition = new InputDefinition([
-            new InputOption('environment', 'e', InputOption::VALUE_REQUIRED, 'Environment'),
+            new InputOption('environment', 'e', InputOption::VALUE_REQUIRED, 'Environment')
         ]);
 
         $consoleInput->bind($definition);
@@ -88,7 +91,7 @@ final class ConsoleInputTest extends TestCase
         $consoleInput = new ConsoleInput($thinkInput);
 
         $definition = new InputDefinition([
-            new InputOption('force', 'f', InputOption::VALUE_NONE, 'Force the operation'),
+            new InputOption('force', 'f', InputOption::VALUE_NONE, 'Force the operation')
         ]);
 
         $consoleInput->bind($definition);

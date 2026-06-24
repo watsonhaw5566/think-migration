@@ -171,7 +171,10 @@ $GLOBALS["__factory_no_sep_loaded"] = true;
         // Important: no trailing separator
         $this->factory->load($tmpDir);
 
-        $this->assertTrue($GLOBALS['__factory_no_sep_loaded'], 'Files should be found even without trailing directory separator');
+        $this->assertTrue(
+            $GLOBALS['__factory_no_sep_loaded'],
+            'Files should be found even without trailing directory separator'
+        );
 
         unset($GLOBALS['__factory_no_sep_loaded']);
         unlink($factoryFile);

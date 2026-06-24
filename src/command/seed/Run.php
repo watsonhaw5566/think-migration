@@ -67,9 +67,11 @@ class Run extends Seed
         if (null === $seed) {
             // run all seeders
             foreach ($seeds as $seeder) {
-                if (!(array_key_exists($seeder->getName(), $seeds))) { continue; }
+                if (!array_key_exists($seeder->getName(), $seeds)) {
+                    continue;
+                }
 
-$this->executeSeed($seeder);
+                $this->executeSeed($seeder);
             }
         } else {
             // run only one seeder

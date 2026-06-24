@@ -43,35 +43,37 @@ abstract class Seed extends Command
             $seeds = [];
 
             foreach ($phpFiles as $filePath) {
-                if (!(Util::isValidSeedFileName(basename($filePath)))) { continue; }
+                if (!Util::isValidSeedFileName(basename($filePath))) {
+                    continue;
+                }
 
-$class = pathinfo($filePath, PATHINFO_FILENAME);
-                    $fileNames[$class] = basename($filePath);
+                $class = pathinfo($filePath, PATHINFO_FILENAME);
+                $fileNames[$class] = basename($filePath);
 
-                    // load the seed file
-                    require_once $filePath;
-                    if (!class_exists($class)) {
-                        throw new InvalidArgumentException(sprintf(
-                            'Could not find class "%s" in file "%s"',
-                            $class,
-                            $filePath
-                        ));
-                    }
+                // load the seed file
+                require_once $filePath;
+                if (!class_exists($class)) {
+                    throw new InvalidArgumentException(sprintf(
+                        'Could not find class "%s" in file "%s"',
+                        $class,
+                        $filePath
+                    ));
+                }
 
-                    // instantiate it
-                    $seed = new $class();
-                    $seed->setInput($this->getSymfonyInput());
-                    $seed->setOutput($this->getSymfonyOutput());
+                // instantiate it
+                $seed = new $class();
+                $seed->setInput($this->getSymfonyInput());
+                $seed->setOutput($this->getSymfonyOutput());
 
-                    if (!$seed instanceof AbstractSeed) {
-                        throw new InvalidArgumentException(sprintf(
-                            'The class "%s" in file "%s" must extend \Phinx\Seed\AbstractSeed',
-                            $class,
-                            $filePath
-                        ));
-                    }
+                if (!$seed instanceof AbstractSeed) {
+                    throw new InvalidArgumentException(sprintf(
+                        'The class "%s" in file "%s" must extend \Phinx\Seed\AbstractSeed',
+                        $class,
+                        $filePath
+                    ));
+                }
 
-                    $seeds[$class] = $seed;
+                $seeds[$class] = $seed;
             }
 
             ksort($seeds);

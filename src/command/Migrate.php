@@ -139,54 +139,56 @@ abstract class Migrate extends Command
             $versions = [];
 
             foreach ($phpFiles as $filePath) {
-                if (!(Util::isValidMigrationFileName(basename($filePath)))) { continue; }
+                if (!Util::isValidMigrationFileName(basename($filePath))) {
+                    continue;
+                }
 
-$version = Util::getVersionFromFileName(basename($filePath));
+                $version = Util::getVersionFromFileName(basename($filePath));
 
-                    if (isset($versions[$version])) {
-                        throw new \InvalidArgumentException(sprintf(
-                            'Duplicate migration - "%s" has the same version as "%s"',
-                            $filePath,
-                            $versions[$version]->getVersion()
-                        ));
-                    }
+                if (isset($versions[$version])) {
+                    throw new \InvalidArgumentException(sprintf(
+                        'Duplicate migration - "%s" has the same version as "%s"',
+                        $filePath,
+                        $versions[$version]->getVersion()
+                    ));
+                }
 
-                    // convert the filename to a class name
-                    $class = Util::mapFileNameToClassName(basename($filePath));
+                // convert the filename to a class name
+                $class = Util::mapFileNameToClassName(basename($filePath));
 
-                    if (isset($fileNames[$class])) {
-                        throw new \InvalidArgumentException(sprintf(
-                            'Migration "%s" has the same name as "%s"',
-                            basename($filePath),
-                            $fileNames[$class]
-                        ));
-                    }
+                if (isset($fileNames[$class])) {
+                    throw new \InvalidArgumentException(sprintf(
+                        'Migration "%s" has the same name as "%s"',
+                        basename($filePath),
+                        $fileNames[$class]
+                    ));
+                }
 
-                    $fileNames[$class] = basename($filePath);
+                $fileNames[$class] = basename($filePath);
 
-                    // load the migration file
-                    /** @noinspection PhpIncludeInspection */
-                    require_once $filePath;
-                    if (!class_exists($class)) {
-                        throw new \InvalidArgumentException(sprintf(
-                            'Could not find class "%s" in file "%s"',
-                            $class,
-                            $filePath
-                        ));
-                    }
+                // load the migration file
+                /** @noinspection PhpIncludeInspection */
+                require_once $filePath;
+                if (!class_exists($class)) {
+                    throw new \InvalidArgumentException(sprintf(
+                        'Could not find class "%s" in file "%s"',
+                        $class,
+                        $filePath
+                    ));
+                }
 
-                    // instantiate it
-                    $migration = new $class('default', $version, $this->getSymfonyInput(), $this->getSymfonyOutput());
+                // instantiate it
+                $migration = new $class('default', $version, $this->getSymfonyInput(), $this->getSymfonyOutput());
 
-                    if (!$migration instanceof AbstractMigration) {
-                        throw new \InvalidArgumentException(sprintf(
-                            'The class "%s" in file "%s" must extend \Phinx\Migration\AbstractMigration',
-                            $class,
-                            $filePath
-                        ));
-                    }
+                if (!$migration instanceof AbstractMigration) {
+                    throw new \InvalidArgumentException(sprintf(
+                        'The class "%s" in file "%s" must extend \Phinx\Migration\AbstractMigration',
+                        $class,
+                        $filePath
+                    ));
+                }
 
-                    $versions[$version] = $migration;
+                $versions[$version] = $migration;
             }
 
             ksort($versions);

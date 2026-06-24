@@ -209,7 +209,7 @@ class ConsoleInput implements InputInterface
             $mode = ThinkInputOption::VALUE_NONE;
         }
 
-        $default = ($mode === ThinkInputOption::VALUE_NONE) ? null : $symfonyOpt->getDefault();
+        $default = $mode === ThinkInputOption::VALUE_NONE ? null : $symfonyOpt->getDefault();
 
         return new ThinkInputOption(
             $symfonyOpt->getName(),

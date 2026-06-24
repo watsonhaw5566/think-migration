@@ -36,6 +36,8 @@ if (!function_exists('database_path')) {
     function database_path($path = '')
     {
         $app = function_exists('app') ? app() : App::getInstance();
-        return $app->getRootPath() . 'database' . ($path ? DIRECTORY_SEPARATOR . ltrim($path, DIRECTORY_SEPARATOR) : '');
+        return (
+            $app->getRootPath() . 'database' . ( $path ? DIRECTORY_SEPARATOR . ltrim($path, DIRECTORY_SEPARATOR) : '' )
+        );
     }
 }

@@ -111,11 +111,11 @@ final class ConsoleOutputTest extends TestCase
     public function testVerbosityLevelMappingIsBidirectional(): void
     {
         $levels = [
-            OutputInterface::VERBOSITY_QUIET        => ThinkOutput::VERBOSITY_QUIET,
-            OutputInterface::VERBOSITY_NORMAL       => ThinkOutput::VERBOSITY_NORMAL,
-            OutputInterface::VERBOSITY_VERBOSE      => ThinkOutput::VERBOSITY_VERBOSE,
+            OutputInterface::VERBOSITY_QUIET => ThinkOutput::VERBOSITY_QUIET,
+            OutputInterface::VERBOSITY_NORMAL => ThinkOutput::VERBOSITY_NORMAL,
+            OutputInterface::VERBOSITY_VERBOSE => ThinkOutput::VERBOSITY_VERBOSE,
             OutputInterface::VERBOSITY_VERY_VERBOSE => ThinkOutput::VERBOSITY_VERY_VERBOSE,
-            OutputInterface::VERBOSITY_DEBUG        => ThinkOutput::VERBOSITY_DEBUG,
+            OutputInterface::VERBOSITY_DEBUG => ThinkOutput::VERBOSITY_DEBUG
         ];
 
         foreach ($levels as $symfonyLevel => $thinkLevel) {

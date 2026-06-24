@@ -52,7 +52,10 @@ final class HelperTest extends TestCase
     public function testDatabasePathWithNestedSubpath(): void
     {
         $result = \database_path('migrations' . DIRECTORY_SEPARATOR . 'foo');
-        $this->assertStringEndsWith('database' . DIRECTORY_SEPARATOR . 'migrations' . DIRECTORY_SEPARATOR . 'foo', $result);
+        $this->assertStringEndsWith(
+            'database' . DIRECTORY_SEPARATOR . 'migrations' . DIRECTORY_SEPARATOR . 'foo',
+            $result
+        );
     }
 
     public function testDatabasePathDoesNotDoubleSeparator(): void

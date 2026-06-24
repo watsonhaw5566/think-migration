@@ -25,20 +25,20 @@ class ConsoleOutput implements OutputInterface
 
     /** Symfony verbosity => ThinkPHP verbosity */
     private const SYMFONY_TO_THINK = [
-        self::VERBOSITY_QUIET        => ThinkOutput::VERBOSITY_QUIET,
-        self::VERBOSITY_NORMAL       => ThinkOutput::VERBOSITY_NORMAL,
-        self::VERBOSITY_VERBOSE      => ThinkOutput::VERBOSITY_VERBOSE,
+        self::VERBOSITY_QUIET => ThinkOutput::VERBOSITY_QUIET,
+        self::VERBOSITY_NORMAL => ThinkOutput::VERBOSITY_NORMAL,
+        self::VERBOSITY_VERBOSE => ThinkOutput::VERBOSITY_VERBOSE,
         self::VERBOSITY_VERY_VERBOSE => ThinkOutput::VERBOSITY_VERY_VERBOSE,
-        self::VERBOSITY_DEBUG        => ThinkOutput::VERBOSITY_DEBUG,
+        self::VERBOSITY_DEBUG => ThinkOutput::VERBOSITY_DEBUG
     ];
 
     /** ThinkPHP verbosity => Symfony verbosity */
     private const THINK_TO_SYMFONY = [
-        ThinkOutput::VERBOSITY_QUIET        => self::VERBOSITY_QUIET,
-        ThinkOutput::VERBOSITY_NORMAL       => self::VERBOSITY_NORMAL,
-        ThinkOutput::VERBOSITY_VERBOSE      => self::VERBOSITY_VERBOSE,
+        ThinkOutput::VERBOSITY_QUIET => self::VERBOSITY_QUIET,
+        ThinkOutput::VERBOSITY_NORMAL => self::VERBOSITY_NORMAL,
+        ThinkOutput::VERBOSITY_VERBOSE => self::VERBOSITY_VERBOSE,
         ThinkOutput::VERBOSITY_VERY_VERBOSE => self::VERBOSITY_VERY_VERBOSE,
-        ThinkOutput::VERBOSITY_DEBUG        => self::VERBOSITY_DEBUG,
+        ThinkOutput::VERBOSITY_DEBUG => self::VERBOSITY_DEBUG
     ];
 
     public function __construct(
