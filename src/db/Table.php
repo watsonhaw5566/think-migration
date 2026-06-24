@@ -1,5 +1,7 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -16,7 +18,6 @@ use Phinx\Db\Table\Index;
 
 class Table extends \Phinx\Db\Table
 {
-
     protected function setOption($name, $value)
     {
         $options = $this->getOptions();
@@ -127,17 +128,17 @@ class Table extends \Phinx\Db\Table
     {
         if ($createdAt) {
             $this->addColumn($createdAt, 'timestamp', [
-                'null'     => false,
-                'default'  => 'CURRENT_TIMESTAMP',
-                'timezone' => $withTimezone,
+                'null' => false,
+                'default' => 'CURRENT_TIMESTAMP',
+                'timezone' => $withTimezone
             ]);
         }
         if ($updatedAt) {
             $this->addColumn($updatedAt, 'timestamp', [
-                'null'     => true,
-                'default'  => 'CURRENT_TIMESTAMP',
-                'update'   => 'CURRENT_TIMESTAMP',
-                'timezone' => $withTimezone,
+                'null' => true,
+                'default' => 'CURRENT_TIMESTAMP',
+                'update' => 'CURRENT_TIMESTAMP',
+                'timezone' => $withTimezone
             ]);
         }
 
@@ -154,15 +155,15 @@ class Table extends \Phinx\Db\Table
     {
         if ($createdAt) {
             $this->addColumn($createdAt, 'datetime', [
-                'null'    => false,
-                'default' => 'CURRENT_TIMESTAMP',
+                'null' => false,
+                'default' => 'CURRENT_TIMESTAMP'
             ]);
         }
         if ($updatedAt) {
             $this->addColumn($updatedAt, 'datetime', [
-                'null'    => true,
+                'null' => true,
                 'default' => 'CURRENT_TIMESTAMP',
-                'update'  => 'CURRENT_TIMESTAMP',
+                'update' => 'CURRENT_TIMESTAMP'
             ]);
         }
 
@@ -204,7 +205,9 @@ class Table extends \Phinx\Db\Table
             if (isset($options['type'])) {
                 return parent::changeColumn($columnName, $options['type'], $options);
             }
-            throw new \InvalidArgumentException('changeColumn() requires a column type (either as second argument or in options[\'type\']).');
+            throw new \InvalidArgumentException(
+                'changeColumn() requires a column type (either as second argument or in options[\'type\']).'
+            );
         }
         return parent::changeColumn($columnName, $newColumnType, $options);
     }

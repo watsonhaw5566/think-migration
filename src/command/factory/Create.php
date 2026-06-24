@@ -1,5 +1,7 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -22,7 +24,8 @@ class Create extends Command
 {
     protected function configure()
     {
-        $this->setName('factory:create')
+        $this
+            ->setName('factory:create')
             ->setDescription('Create a new model factory')
             ->addArgument('name', InputArgument::REQUIRED, 'What is the name of the model?');
     }
@@ -43,11 +46,14 @@ class Create extends Command
             throw new InvalidArgumentException(sprintf('Factory directory "%s" is not writable', $path));
         }
 
-        $path      = realpath($path);
+        $path = realpath($path);
         $className = $this->input->getArgument('name');
 
         if (!Util::isValidPhinxClassName($className)) {
-            throw new InvalidArgumentException(sprintf('The migration class name "%s" is invalid. Please use CamelCase format.', $className));
+            throw new InvalidArgumentException(sprintf(
+                'The migration class name "%s" is invalid. Please use CamelCase format.',
+                $className
+            ));
         }
 
         $filePath = $path . DIRECTORY_SEPARATOR . $className . '.php';
@@ -61,7 +67,7 @@ class Create extends Command
 
         // inject the class names appropriate to this migration
         $contents = strtr($contents, [
-            '"ModelClass"' => "\\app\\model\\" . $className . '::class',
+            '"ModelClass"' => "\\app\\model\\" . $className . '::class'
         ]);
 
         if (false === file_put_contents($filePath, $contents)) {

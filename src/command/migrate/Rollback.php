@@ -1,5 +1,7 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
+
 // +----------------------------------------------------------------------
 // | TopThink [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -23,21 +25,21 @@ class Rollback extends Migrate
      */
     protected function configure()
     {
-        $this->setName('migrate:rollback')
-             ->setDescription('Rollback the last or to a specific migration')
-             ->addOption('--target', '-t', InputOption::VALUE_REQUIRED, 'The version number to rollback to')
-             ->addOption('--date', '-d', InputOption::VALUE_REQUIRED, 'The date to rollback to')
-             ->addOption('--force', '-f', InputOption::VALUE_NONE, 'Force rollback to ignore breakpoints')
-             ->setHelp(<<<EOT
-The <info>migrate:rollback</info> command reverts the last migration, or optionally up to a specific version
+        $this
+            ->setName('migrate:rollback')
+            ->setDescription('Rollback the last or to a specific migration')
+            ->addOption('--target', '-t', InputOption::VALUE_REQUIRED, 'The version number to rollback to')
+            ->addOption('--date', '-d', InputOption::VALUE_REQUIRED, 'The date to rollback to')
+            ->addOption('--force', '-f', InputOption::VALUE_NONE, 'Force rollback to ignore breakpoints')
+            ->setHelp(<<<EOT
+                The <info>migrate:rollback</info> command reverts the last migration, or optionally up to a specific version
 
-<info>php think migrate:rollback</info>
-<info>php think migrate:rollback -t 20111018185412</info>
-<info>php think migrate:rollback -d 20111018</info>
-<info>php think migrate:rollback -v</info>
+                <info>php think migrate:rollback</info>
+                <info>php think migrate:rollback -t 20111018185412</info>
+                <info>php think migrate:rollback -d 20111018</info>
+                <info>php think migrate:rollback -v</info>
 
-EOT
-             );
+                EOT);
         $this->addOption('connection', 'c', InputOption::VALUE_REQUIRED, 'The database connection to use.');
     }
 
@@ -51,8 +53,8 @@ EOT
     protected function execute(Input $input, Output $output)
     {
         $version = $input->getOption('target');
-        $date    = $input->getOption('date');
-        $force   = !!$input->getOption('force');
+        $date = $input->getOption('date');
+        $force = !!$input->getOption('force');
 
         // rollback the specified environment
         $start = microtime(true);
@@ -71,7 +73,7 @@ EOT
     {
         $migrations = $this->getMigrations();
         $versionLog = $this->getVersionLog();
-        $versions   = array_keys($versionLog);
+        $versions = array_keys($versionLog);
 
         ksort($migrations);
         sort($versions);
@@ -85,7 +87,7 @@ EOT
         // If no target version was supplied, revert the last migration
         if (null === $version) {
             // Get the migration before the last run migration
-            $prev    = count($versions) - 2;
+            $prev = count($versions) - 2;
             $version = $prev < 0 ? 0 : $versions[$prev];
         } else {
             // Get the first migration number
@@ -111,7 +113,11 @@ EOT
             }
 
             if (in_array($migration->getVersion(), $versions)) {
-                if (isset($versionLog[$migration->getVersion()]) && 0 != $versionLog[$migration->getVersion()]['breakpoint'] && !$force) {
+                if (
+                    isset($versionLog[$migration->getVersion()])
+                    && 0 != $versionLog[$migration->getVersion()]['breakpoint']
+                    && !$force
+                ) {
                     $this->output->writeln('<error>Breakpoint reached. Further rollbacks inhibited.</error>');
                     break;
                 }
@@ -122,11 +128,11 @@ EOT
 
     protected function rollbackToDateTime(\DateTime $dateTime, $force = false)
     {
-        $versions   = $this->getVersions();
+        $versions = $this->getVersions();
         $dateString = $dateTime->format('YmdHis');
         sort($versions);
 
-        $earlierVersion      = null;
+        $earlierVersion = null;
         $availableMigrations = array_filter($versions, function ($version) use ($dateString, &$earlierVersion) {
             if ($version <= $dateString) {
                 $earlierVersion = $version;

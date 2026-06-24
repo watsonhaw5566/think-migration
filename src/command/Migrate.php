@@ -1,5 +1,7 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -34,13 +36,23 @@ abstract class Migrate extends Command
     protected function executeMigration(MigrationInterface $migration, $direction = MigrationInterface::UP)
     {
         $this->output->writeln('');
-        $this->output->writeln(' ==' . ' <info>' . $migration->getVersion() . ' ' . $migration->getName() . ':</info>' . ' <comment>' . (MigrationInterface::UP === $direction ? 'migrating' : 'reverting') . '</comment>');
+        $this->output->writeln(
+            ' =='
+            . ' <info>'
+            . $migration->getVersion()
+            . ' '
+            . $migration->getName()
+            . ':</info>'
+            . ' <comment>'
+            . ( MigrationInterface::UP === $direction ? 'migrating' : 'reverting' )
+            . '</comment>'
+        );
 
         // Execute the migration and log the time elapsed.
         $start = microtime(true);
 
         $startTime = time();
-        $direction = (MigrationInterface::UP === $direction) ? MigrationInterface::UP : MigrationInterface::DOWN;
+        $direction = MigrationInterface::UP === $direction ? MigrationInterface::UP : MigrationInterface::DOWN;
         $migration->setMigratingUp($direction === MigrationInterface::UP);
         $migration->setAdapter($this->getAdapter());
 
@@ -82,12 +94,28 @@ abstract class Migrate extends Command
         $migration->postFlightCheck();
 
         // Record it in the database
-        $this->getAdapter()
-            ->migrated($migration, $direction, date('Y-m-d H:i:s', $startTime), date('Y-m-d H:i:s', time()));
+        $this->getAdapter()->migrated(
+            $migration,
+            $direction,
+            date('Y-m-d H:i:s', $startTime),
+            date('Y-m-d H:i:s', time())
+        );
 
         $end = microtime(true);
 
-        $this->output->writeln(' ==' . ' <info>' . $migration->getVersion() . ' ' . $migration->getName() . ':</info>' . ' <comment>' . (MigrationInterface::UP === $direction ? 'migrated' : 'reverted') . ' ' . sprintf('%.4fs', $end - $start) . '</comment>');
+        $this->output->writeln(
+            ' =='
+            . ' <info>'
+            . $migration->getVersion()
+            . ' '
+            . $migration->getName()
+            . ':</info>'
+            . ' <comment>'
+            . ( MigrationInterface::UP === $direction ? 'migrated' : 'reverted' )
+            . ' '
+            . sprintf('%.4fs', $end - $start)
+            . '</comment>'
+        );
     }
 
     protected function getVersionLog()
@@ -115,14 +143,22 @@ abstract class Migrate extends Command
                     $version = Util::getVersionFromFileName(basename($filePath));
 
                     if (isset($versions[$version])) {
-                        throw new \InvalidArgumentException(sprintf('Duplicate migration - "%s" has the same version as "%s"', $filePath, $versions[$version]->getVersion()));
+                        throw new \InvalidArgumentException(sprintf(
+                            'Duplicate migration - "%s" has the same version as "%s"',
+                            $filePath,
+                            $versions[$version]->getVersion()
+                        ));
                     }
 
                     // convert the filename to a class name
                     $class = Util::mapFileNameToClassName(basename($filePath));
 
                     if (isset($fileNames[$class])) {
-                        throw new \InvalidArgumentException(sprintf('Migration "%s" has the same name as "%s"', basename($filePath), $fileNames[$class]));
+                        throw new \InvalidArgumentException(sprintf(
+                            'Migration "%s" has the same name as "%s"',
+                            basename($filePath),
+                            $fileNames[$class]
+                        ));
                     }
 
                     $fileNames[$class] = basename($filePath);
@@ -131,14 +167,22 @@ abstract class Migrate extends Command
                     /** @noinspection PhpIncludeInspection */
                     require_once $filePath;
                     if (!class_exists($class)) {
-                        throw new \InvalidArgumentException(sprintf('Could not find class "%s" in file "%s"', $class, $filePath));
+                        throw new \InvalidArgumentException(sprintf(
+                            'Could not find class "%s" in file "%s"',
+                            $class,
+                            $filePath
+                        ));
                     }
 
                     // instantiate it
                     $migration = new $class('default', $version, $this->getSymfonyInput(), $this->getSymfonyOutput());
 
-                    if (!($migration instanceof AbstractMigration)) {
-                        throw new \InvalidArgumentException(sprintf('The class "%s" in file "%s" must extend \Phinx\Migration\AbstractMigration', $class, $filePath));
+                    if (!$migration instanceof AbstractMigration) {
+                        throw new \InvalidArgumentException(sprintf(
+                            'The class "%s" in file "%s" must extend \Phinx\Migration\AbstractMigration',
+                            $class,
+                            $filePath
+                        ));
                     }
 
                     $versions[$version] = $migration;

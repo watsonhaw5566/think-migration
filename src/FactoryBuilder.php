@@ -1,5 +1,6 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
 
 namespace think\migration;
 
@@ -10,7 +11,6 @@ use think\Model;
 
 class FactoryBuilder
 {
-
     /**
      * The model definitions in the container.
      *
@@ -93,15 +93,21 @@ class FactoryBuilder
      * @param Faker $faker
      * @return void
      */
-    public function __construct($class, $name, array $definitions, array $states,
-                                array $afterMaking, array $afterCreating, Faker $faker)
-    {
-        $this->name          = $name;
-        $this->class         = $class;
-        $this->faker         = $faker;
-        $this->states        = $states;
-        $this->definitions   = $definitions;
-        $this->afterMaking   = $afterMaking;
+    public function __construct(
+        $class,
+        $name,
+        array $definitions,
+        array $states,
+        array $afterMaking,
+        array $afterCreating,
+        Faker $faker
+    ) {
+        $this->name = $name;
+        $this->class = $class;
+        $this->faker = $faker;
+        $this->states = $states;
+        $this->definitions = $definitions;
+        $this->afterMaking = $afterMaking;
         $this->afterCreating = $afterCreating;
     }
 
@@ -219,12 +225,15 @@ class FactoryBuilder
         }
 
         if ($this->amount < 1) {
-            return (new $this->class)->toCollection();
+            return ( new $this->class() )->toCollection();
         }
 
-        $instances = (new $this->class)->toCollection(array_map(function () use ($attributes) {
-            return $this->makeInstance($attributes);
-        }, range(1, $this->amount)));
+        $instances = ( new $this->class() )->toCollection(array_map(
+            function () use ($attributes) {
+                return $this->makeInstance($attributes);
+            },
+            range(1, $this->amount)
+        ));
 
         $this->callAfterMaking($instances);
 
@@ -247,9 +256,12 @@ class FactoryBuilder
             return [];
         }
 
-        return array_map(function () use ($attributes) {
-            return $this->getRawAttributes($attributes);
-        }, range(1, $this->amount));
+        return array_map(
+            function () use ($attributes) {
+                return $this->getRawAttributes($attributes);
+            },
+            range(1, $this->amount)
+        );
     }
 
     /**
@@ -266,14 +278,9 @@ class FactoryBuilder
             throw new InvalidArgumentException("Unable to locate factory with name [{$this->name}] [{$this->class}].");
         }
 
-        $definition = call_user_func(
-            $this->definitions[$this->class][$this->name],
-            $this->faker, $attributes
-        );
+        $definition = call_user_func($this->definitions[$this->class][$this->name], $this->faker, $attributes);
 
-        return $this->expandAttributes(
-            array_merge($this->applyStates($definition, $attributes), $attributes)
-        );
+        return $this->expandAttributes(array_merge($this->applyStates($definition, $attributes), $attributes));
     }
 
     /**
@@ -285,7 +292,7 @@ class FactoryBuilder
     protected function makeInstance(array $attributes = [])
     {
         /** @var Model $model */
-        $model = new $this->class;
+        $model = new $this->class();
 
         $model->setAttrs($this->getRawAttributes($attributes));
 
@@ -310,10 +317,7 @@ class FactoryBuilder
                 throw new InvalidArgumentException("Unable to locate [{$state}] state for [{$this->class}].");
             }
 
-            $definition = array_merge(
-                $definition,
-                $this->stateAttributes($state, $attributes)
-            );
+            $definition = array_merge($definition, $this->stateAttributes($state, $attributes));
         }
 
         return $definition;
@@ -334,10 +338,7 @@ class FactoryBuilder
             return $stateAttributes;
         }
 
-        return call_user_func(
-            $stateAttributes,
-            $this->faker, $attributes
-        );
+        return call_user_func($stateAttributes, $this->faker, $attributes);
     }
 
     /**
@@ -442,7 +443,6 @@ class FactoryBuilder
      */
     protected function stateHasAfterCallback($state)
     {
-        return isset($this->afterMaking[$this->class][$state]) ||
-            isset($this->afterCreating[$this->class][$state]);
+        return isset($this->afterMaking[$this->class][$state]) || isset($this->afterCreating[$this->class][$state]);
     }
 }

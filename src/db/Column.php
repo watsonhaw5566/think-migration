@@ -1,5 +1,7 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -168,5 +170,4 @@ class Column extends \Phinx\Db\Table\Column
     {
         return self::make($name, AdapterInterface::PHINX_TYPE_UUID);
     }
-
 }

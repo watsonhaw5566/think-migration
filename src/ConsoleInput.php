@@ -1,5 +1,6 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
 
 namespace think\migration;
 
@@ -19,7 +20,7 @@ use think\console\input\Option;
 class ConsoleInput implements InputInterface
 {
     public function __construct(
-        private Input $input,
+        private Input $input
     ) {
     }
 
@@ -39,8 +40,11 @@ class ConsoleInput implements InputInterface
         return false;
     }
 
-    public function getParameterOption(string|array $values, string|bool|int|float|array|null $default = false, bool $onlyParams = false): mixed
-    {
+    public function getParameterOption(
+        string|array $values,
+        string|bool|int|float|array|null $default = false,
+        bool $onlyParams = false
+    ): mixed {
         return $this->input->getParameterOption($values, $default);
     }
 

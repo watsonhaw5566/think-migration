@@ -1,5 +1,7 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
+
 // +----------------------------------------------------------------------
 // | TopThink [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -24,7 +26,8 @@ class Create extends Seed
      */
     protected function configure()
     {
-        $this->setName('seed:create')
+        $this
+            ->setName('seed:create')
             ->setDescription('Create a new database seeder')
             ->addArgument('name', InputArgument::REQUIRED, 'What is the name of the seeder?')
             ->setHelp(sprintf('%sCreates a new database seeder%s', PHP_EOL, PHP_EOL));
@@ -55,7 +58,10 @@ class Create extends Seed
         $className = $input->getArgument('name');
 
         if (!Util::isValidPhinxClassName($className)) {
-            throw new \InvalidArgumentException(sprintf('The seed class name "%s" is invalid. Please use CamelCase format', $className));
+            throw new \InvalidArgumentException(sprintf(
+                'The seed class name "%s" is invalid. Please use CamelCase format',
+                $className
+            ));
         }
 
         // Compute the file path
@@ -67,8 +73,8 @@ class Create extends Seed
 
         // inject the class names appropriate to this seeder
         $contents = file_get_contents($this->getTemplate());
-        $classes  = [
-            'SeederClass' => $className,
+        $classes = [
+            'SeederClass' => $className
         ];
         $contents = strtr($contents, $classes);
 

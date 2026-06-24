@@ -1,5 +1,6 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
 
 namespace think\migration;
 
@@ -10,7 +11,6 @@ use think\App;
 
 class Creator
 {
-
     protected $app;
 
     public function __construct(App $app)
@@ -23,7 +23,10 @@ class Creator
         $path = $this->ensureDirectory();
 
         if (!Util::isValidPhinxClassName($className)) {
-            throw new InvalidArgumentException(sprintf('The migration class name "%s" is invalid. Please use CamelCase format.', $className));
+            throw new InvalidArgumentException(sprintf(
+                'The migration class name "%s" is invalid. Please use CamelCase format.',
+                $className
+            ));
         }
 
         if (!Util::isUniqueMigrationClassName($className, $path)) {
@@ -46,7 +49,7 @@ class Creator
 
         // inject the class names appropriate to this migration
         $contents = strtr($contents, [
-            'MigratorClass' => $className,
+            'MigratorClass' => $className
         ]);
 
         if (false === file_put_contents($filePath, $contents, LOCK_EX)) {

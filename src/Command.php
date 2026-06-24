@@ -1,5 +1,7 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -82,15 +84,15 @@ abstract class Command extends \think\console\Command
 
         if (0 == $config['deploy']) {
             $dbConfig = [
-                'adapter'      => $config['type'],
-                'host'         => $config['hostname'],
-                'name'         => $config['database'],
-                'user'         => $config['username'],
-                'pass'         => $config['password'],
-                'port'         => $config['hostport'],
-                'charset'      => $config['charset'],
-                'suffix'       => $config['suffix'] ?? '',
-                'table_prefix' => $config['prefix'],
+                'adapter' => $config['type'],
+                'host' => $config['hostname'],
+                'name' => $config['database'],
+                'user' => $config['username'],
+                'pass' => $config['password'],
+                'port' => $config['hostport'],
+                'charset' => $config['charset'],
+                'suffix' => $config['suffix'] ?? '',
+                'table_prefix' => $config['prefix']
             ];
         } else {
             $typeParts = explode(',', (string) $config['type']);
@@ -100,26 +102,26 @@ abstract class Command extends \think\console\Command
             $passParts = explode(',', (string) $config['password']);
             $portParts = explode(',', (string) $config['hostport']);
             $charsetParts = explode(',', (string) $config['charset']);
-            $suffixParts = explode(',', (string) ($config['suffix'] ?? ''));
+            $suffixParts = explode(',', (string) ( $config['suffix'] ?? '' ));
             $prefixParts = explode(',', (string) $config['prefix']);
 
             $dbConfig = [
-                'adapter'      => $typeParts[0] ?? '',
-                'host'         => $hostParts[0] ?? '',
-                'name'         => $nameParts[0] ?? '',
-                'user'         => $userParts[0] ?? '',
-                'pass'         => $passParts[0] ?? '',
-                'port'         => $portParts[0] ?? '',
-                'charset'      => $charsetParts[0] ?? '',
-                'suffix'       => $suffixParts[0] ?? '',
-                'table_prefix' => $prefixParts[0] ?? '',
+                'adapter' => $typeParts[0] ?? '',
+                'host' => $hostParts[0] ?? '',
+                'name' => $nameParts[0] ?? '',
+                'user' => $userParts[0] ?? '',
+                'pass' => $passParts[0] ?? '',
+                'port' => $portParts[0] ?? '',
+                'charset' => $charsetParts[0] ?? '',
+                'suffix' => $suffixParts[0] ?? '',
+                'table_prefix' => $prefixParts[0] ?? ''
             ];
         }
 
         $table = $this->app->config->get('database.migration_table', 'migrations');
 
         $dbConfig['migration_table'] = $dbConfig['table_prefix'] . $table;
-        $dbConfig['version_order']   = Config::VERSION_ORDER_CREATION_TIME;
+        $dbConfig['version_order'] = Config::VERSION_ORDER_CREATION_TIME;
 
         return $dbConfig;
     }

@@ -1,5 +1,7 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -25,7 +27,6 @@ use think\migration\command\seed\Run as SeedRun;
 
 class Service extends \think\Service
 {
-
     public function boot()
     {
         if (!$this->app->runningInConsole()) {
@@ -37,7 +38,9 @@ class Service extends \think\Service
         });
 
         $this->app->bind(Factory::class, function () {
-            return (new Factory($this->app->make(FakerGenerator::class)))->load($this->app->getRootPath() . 'database/factories/');
+            return ( new Factory($this->app->make(FakerGenerator::class)) )->load(
+                $this->app->getRootPath() . 'database/factories/'
+            );
         });
 
         $this->app->bind('migration.creator', Creator::class);
@@ -50,7 +53,7 @@ class Service extends \think\Service
             MigrateStatus::class,
             SeedCreate::class,
             SeedRun::class,
-            FactoryCreate::class,
+            FactoryCreate::class
         ]);
     }
 }

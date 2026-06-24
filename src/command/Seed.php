@@ -1,5 +1,7 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -20,7 +22,6 @@ use think\migration\Seeder;
 
 abstract class Seed extends Command
 {
-
     /**
      * @var array
      */
@@ -44,13 +45,17 @@ abstract class Seed extends Command
             foreach ($phpFiles as $filePath) {
                 if (Util::isValidSeedFileName(basename($filePath))) {
                     // convert the filename to a class name
-                    $class             = pathinfo($filePath, PATHINFO_FILENAME);
+                    $class = pathinfo($filePath, PATHINFO_FILENAME);
                     $fileNames[$class] = basename($filePath);
 
                     // load the seed file
                     require_once $filePath;
                     if (!class_exists($class)) {
-                        throw new InvalidArgumentException(sprintf('Could not find class "%s" in file "%s"', $class, $filePath));
+                        throw new InvalidArgumentException(sprintf(
+                            'Could not find class "%s" in file "%s"',
+                            $class,
+                            $filePath
+                        ));
                     }
 
                     // instantiate it
@@ -58,8 +63,12 @@ abstract class Seed extends Command
                     $seed->setInput($this->getSymfonyInput());
                     $seed->setOutput($this->getSymfonyOutput());
 
-                    if (!($seed instanceof AbstractSeed)) {
-                        throw new InvalidArgumentException(sprintf('The class "%s" in file "%s" must extend \Phinx\Seed\AbstractSeed', $class, $filePath));
+                    if (!$seed instanceof AbstractSeed) {
+                        throw new InvalidArgumentException(sprintf(
+                            'The class "%s" in file "%s" must extend \Phinx\Seed\AbstractSeed',
+                            $class,
+                            $filePath
+                        ));
                     }
 
                     $seeds[$class] = $seed;

@@ -1,5 +1,7 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
+
 // +----------------------------------------------------------------------
 // | TopThink [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -21,13 +23,13 @@ use think\migration\Creator;
 
 class Create extends Command
 {
-
     /**
      * {@inheritdoc}
      */
     protected function configure()
     {
-        $this->setName('migrate:create')
+        $this
+            ->setName('migrate:create')
             ->setDescription('Create a new migration')
             ->addArgument('name', InputArgument::REQUIRED, 'What is the name of the migration?')
             ->setHelp(sprintf('%sCreates a new database migration%s', PHP_EOL, PHP_EOL));
@@ -54,5 +56,4 @@ class Create extends Command
 
         $output->writeln('<info>created</info> .' . str_replace(getcwd(), '', realpath($path)));
     }
-
 }

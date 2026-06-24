@@ -1,5 +1,7 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
+
 // +----------------------------------------------------------------------
 // | TopThink [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -22,16 +24,21 @@ class Status extends Migrate
      */
     protected function configure()
     {
-        $this->setName('migrate:status')
-             ->setDescription('Show migration status')
-             ->addOption('--format', '-f', InputOption::VALUE_REQUIRED, 'The output format: text or json. Defaults to text.')
-             ->setHelp(<<<EOT
-The <info>migrate:status</info> command prints a list of all migrations, along with their current status
+        $this
+            ->setName('migrate:status')
+            ->setDescription('Show migration status')
+            ->addOption(
+                '--format',
+                '-f',
+                InputOption::VALUE_REQUIRED,
+                'The output format: text or json. Defaults to text.'
+            )
+            ->setHelp(<<<EOT
+                The <info>migrate:status</info> command prints a list of all migrations, along with their current status
 
-<info>php think migrate:status</info>
-<info>php think migrate:status -f json</info>
-EOT
-             );
+                <info>php think migrate:status</info>
+                <info>php think migrate:status -f json</info>
+                EOT);
         $this->addOption('connection', 'c', InputOption::VALUE_REQUIRED, 'The database connection to use.');
     }
 
@@ -56,7 +63,7 @@ EOT
 
     protected function printStatus($format = null)
     {
-        $output     = $this->output;
+        $output = $this->output;
         $migrations = [];
         if (count($this->getMigrations())) {
             // TODO - rewrite using Symfony Table Helper as we already have this library
@@ -65,13 +72,15 @@ EOT
             $output->writeln(' Status  Migration ID    Started              Finished             Migration Name ');
             $output->writeln('----------------------------------------------------------------------------------');
 
-            $versions      = $this->getVersionLog();
+            $versions = $this->getVersionLog();
             $maxNameLength = $versions ? max(array_map(function ($version) {
-                return strlen($version['migration_name']);
-            }, $versions)) : 0;
+                    return strlen($version['migration_name']);
+                }, $versions)) : 0;
 
             foreach ($this->getMigrations() as $migration) {
-                $version = array_key_exists($migration->getVersion(), $versions) ? $versions[$migration->getVersion()] : false;
+                $version = array_key_exists($migration->getVersion(), $versions)
+                    ? $versions[$migration->getVersion()]
+                    : false;
                 if ($version) {
                     $status = '     <info>up</info> ';
                 } else {
@@ -81,7 +90,14 @@ EOT
                 }
                 $maxNameLength = max($maxNameLength, strlen($migration->getName()));
 
-                $output->writeln(sprintf('%s %14.0f  %19s  %19s  <comment>%s</comment>', $status, $migration->getVersion(), $version['start_time'], $version['end_time'], $migration->getName()));
+                $output->writeln(sprintf(
+                    '%s %14.0f  %19s  %19s  <comment>%s</comment>',
+                    $status,
+                    $migration->getVersion(),
+                    $version['start_time'],
+                    $version['end_time'],
+                    $migration->getName()
+                ));
 
                 if ($version && $version['breakpoint']) {
                     $output->writeln('         <error>BREAKPOINT SET</error>');
@@ -89,15 +105,21 @@ EOT
 
                 $migrations[] = [
                     'migration_status' => trim(strip_tags($status)),
-                    'migration_id'     => sprintf('%14.0f', $migration->getVersion()),
-                    'migration_name'   => $migration->getName()
+                    'migration_id' => sprintf('%14.0f', $migration->getVersion()),
+                    'migration_name' => $migration->getName()
                 ];
                 unset($versions[$migration->getVersion()]);
             }
 
             if (count($versions)) {
                 foreach ($versions as $missing => $version) {
-                    $output->writeln(sprintf('     <error>up</error>  %14.0f  %19s  %19s  <comment>%s</comment>  <error>** MISSING **</error>', $missing, $version['start_time'], $version['end_time'], str_pad($version['migration_name'], $maxNameLength, ' ')));
+                    $output->writeln(sprintf(
+                        '     <error>up</error>  %14.0f  %19s  %19s  <comment>%s</comment>  <error>** MISSING **</error>',
+                        $missing,
+                        $version['start_time'],
+                        $version['end_time'],
+                        str_pad($version['migration_name'], $maxNameLength, ' ')
+                    ));
 
                     if ($version && $version['breakpoint']) {
                         $output->writeln('         <error>BREAKPOINT SET</error>');
@@ -107,7 +129,9 @@ EOT
         } else {
             // there are no migrations
             $output->writeln('');
-            $output->writeln('There are no available migrations. Try creating one using the <info>create</info> command.');
+            $output->writeln(
+                'There are no available migrations. Try creating one using the <info>create</info> command.'
+            );
         }
 
         // write an empty line
@@ -117,7 +141,7 @@ EOT
                 case 'json':
                     $output->writeln(json_encode([
                         'pending_count' => count($this->getMigrations()),
-                        'migrations'    => $migrations
+                        'migrations' => $migrations
                     ]));
                     break;
                 default:

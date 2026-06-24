@@ -1,5 +1,6 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
 
 namespace think\migration\Tests;
 
@@ -15,7 +16,7 @@ final class FactoryTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->faker   = FakerFactory::create();
+        $this->faker = FakerFactory::create();
         $this->factory = new Factory($this->faker);
     }
 

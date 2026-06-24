@@ -1,5 +1,6 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
 
 namespace think\migration\Tests;
 
@@ -16,8 +17,8 @@ final class MigratorTest extends TestCase
     protected function setUp(): void
     {
         $adapter = AdapterFactory::instance()->getAdapter('sqlite', [
-            'name'   => ':memory:',
-            'memory' => true,
+            'name' => ':memory:',
+            'memory' => true
         ]);
 
         $this->migrator = new Migrator('test_migration', (int) date('YmdHis'));
@@ -50,8 +51,8 @@ final class MigratorTest extends TestCase
     public function testTableAcceptsOptions(): void
     {
         $table = $this->migrator->table('products', [
-            'id'     => false,
-            'engine' => 'InnoDB',
+            'id' => false,
+            'engine' => 'InnoDB'
         ]);
 
         $options = $table->getOptions();

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
 
 namespace think\migration;
 
@@ -16,7 +17,7 @@ use think\console\Output;
 class ConsoleOutput implements OutputInterface
 {
     public function __construct(
-        private Output $output,
+        private Output $output
     ) {
     }
 
@@ -97,14 +98,33 @@ class ConsoleOutput implements OutputInterface
     {
         // 返回简单的 formatter，Phinx 只会用 write/writeln/getVerbosity
         return new class implements OutputFormatterInterface {
-            public function setDecorated(bool $decorated): void {}
-            public function isDecorated(): bool { return false; }
-            public function setStyle(string $name, OutputFormatterStyleInterface $style): void {}
-            public function hasStyle(string $name): bool { return false; }
-            public function getStyle(string $name): OutputFormatterStyleInterface {
+            public function setDecorated(bool $decorated): void
+            {
+            }
+
+            public function isDecorated(): bool
+            {
+                return false;
+            }
+
+            public function setStyle(string $name, OutputFormatterStyleInterface $style): void
+            {
+            }
+
+            public function hasStyle(string $name): bool
+            {
+                return false;
+            }
+
+            public function getStyle(string $name): OutputFormatterStyleInterface
+            {
                 return new OutputFormatterStyle();
             }
-            public function format(?string $message): ?string { return $message; }
+
+            public function format(?string $message): ?string
+            {
+                return $message;
+            }
         };
     }
 }

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
 
 namespace think\migration\Tests;
 
@@ -15,7 +16,7 @@ final class CreatorTest extends TestCase
 
     protected function setUp(): void
     {
-        $app       = new App(__DIR__);
+        $app = new App(__DIR__);
         $this->creator = new Creator($app);
 
         $this->tmpDir = sys_get_temp_dir() . '/think_migration_test_' . uniqid();
@@ -110,10 +111,7 @@ final class CreatorTest extends TestCase
         $basename = pathinfo($filePath, PATHINFO_FILENAME);
 
         // Phinx filename format: YYYYMMDDHHMMSS_classname.php (snake_case)
-        $this->assertMatchesRegularExpression(
-            '/^\d{14}_[a-z_]+$/',
-            $basename
-        );
+        $this->assertMatchesRegularExpression('/^\d{14}_[a-z_]+$/', $basename);
         $this->assertStringContainsString('comments', $basename);
     }
 }

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
 
 namespace think\migration\Tests;
 
@@ -16,8 +17,8 @@ final class TableTest extends TestCase
     protected function setUp(): void
     {
         $adapter = AdapterFactory::instance()->getAdapter('sqlite', [
-            'name'   => ':memory:',
-            'memory' => true,
+            'name' => ':memory:',
+            'memory' => true
         ]);
 
         $this->table = new Table('test_users', [], $adapter);
@@ -242,10 +243,7 @@ final class TableTest extends TestCase
             }
         }
 
-        $this->assertTrue(
-            $found,
-            "Column action '$columnName' not found in pending actions"
-        );
+        $this->assertTrue($found, "Column action '$columnName' not found in pending actions");
     }
 
     /**
@@ -313,9 +311,6 @@ final class TableTest extends TestCase
             }
         }
 
-        $this->assertTrue(
-            $found,
-            "Index action for column '$columnName' not found in pending actions"
-        );
+        $this->assertTrue($found, "Index action for column '$columnName' not found in pending actions");
     }
 }

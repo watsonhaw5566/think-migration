@@ -1,5 +1,6 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
 
 namespace think\migration\Tests;
 
@@ -24,19 +25,11 @@ final class FactoryBuilderTest extends TestCase
             FakeEntity::class => [
                 'default' => function () {
                     return ['name' => 'Alice', 'email' => 'alice@example.com'];
-                },
-            ],
+                }
+            ]
         ];
 
-        $builder = new FactoryBuilder(
-            FakeEntity::class,
-            'default',
-            $definitions,
-            [],
-            [],
-            [],
-            $this->faker
-        );
+        $builder = new FactoryBuilder(FakeEntity::class, 'default', $definitions, [], [], [], $this->faker);
 
         $attributes = $builder->raw();
 
@@ -50,19 +43,11 @@ final class FactoryBuilderTest extends TestCase
             FakeEntity::class => [
                 'default' => function (Faker $faker) {
                     return ['id' => $faker->randomNumber()];
-                },
-            ],
+                }
+            ]
         ];
 
-        $builder = new FactoryBuilder(
-            FakeEntity::class,
-            'default',
-            $definitions,
-            [],
-            [],
-            [],
-            $this->faker
-        );
+        $builder = new FactoryBuilder(FakeEntity::class, 'default', $definitions, [], [], [], $this->faker);
 
         $results = $builder->times(5)->raw();
 
@@ -79,19 +64,11 @@ final class FactoryBuilderTest extends TestCase
             FakeEntity::class => [
                 'default' => function () {
                     return ['name' => 'Test'];
-                },
-            ],
+                }
+            ]
         ];
 
-        $builder = new FactoryBuilder(
-            FakeEntity::class,
-            'default',
-            $definitions,
-            [],
-            [],
-            [],
-            $this->faker
-        );
+        $builder = new FactoryBuilder(FakeEntity::class, 'default', $definitions, [], [], [], $this->faker);
 
         $results = $builder->times(0)->raw();
 
@@ -105,19 +82,11 @@ final class FactoryBuilderTest extends TestCase
             FakeEntity::class => [
                 'default' => function () {
                     return ['name' => 'Original', 'role' => 'user'];
-                },
-            ],
+                }
+            ]
         ];
 
-        $builder = new FactoryBuilder(
-            FakeEntity::class,
-            'default',
-            $definitions,
-            [],
-            [],
-            [],
-            $this->faker
-        );
+        $builder = new FactoryBuilder(FakeEntity::class, 'default', $definitions, [], [], [], $this->faker);
 
         $attributes = $builder->raw(['name' => 'Overridden']);
 
@@ -134,19 +103,11 @@ final class FactoryBuilderTest extends TestCase
                 },
                 'admin' => function () {
                     return ['role' => 'admin'];
-                },
-            ],
+                }
+            ]
         ];
 
-        $builder = new FactoryBuilder(
-            FakeEntity::class,
-            'admin',
-            $definitions,
-            [],
-            [],
-            [],
-            $this->faker
-        );
+        $builder = new FactoryBuilder(FakeEntity::class, 'admin', $definitions, [], [], [], $this->faker);
 
         $attributes = $builder->raw();
 
@@ -159,26 +120,18 @@ final class FactoryBuilderTest extends TestCase
             FakeEntity::class => [
                 'default' => function () {
                     return ['name' => 'Test', 'verified' => false];
-                },
-            ],
+                }
+            ]
         ];
 
         $states = [
             FakeEntity::class => [
                 'verified' => ['verified' => true],
-                'banned'   => ['banned' => true],
-            ],
+                'banned' => ['banned' => true]
+            ]
         ];
 
-        $builder = new FactoryBuilder(
-            FakeEntity::class,
-            'default',
-            $definitions,
-            $states,
-            [],
-            [],
-            $this->faker
-        );
+        $builder = new FactoryBuilder(FakeEntity::class, 'default', $definitions, $states, [], [], $this->faker);
 
         $attributes = $builder->states(['verified', 'banned'])->raw();
 
@@ -192,24 +145,16 @@ final class FactoryBuilderTest extends TestCase
             FakeEntity::class => [
                 'default' => function () {
                     return [
-                        'name'      => 'Test',
-                        'computed'  => function (array $attrs) {
+                        'name' => 'Test',
+                        'computed' => function (array $attrs) {
                             return 'computed_' . $attrs['name'];
-                        },
+                        }
                     ];
-                },
-            ],
+                }
+            ]
         ];
 
-        $builder = new FactoryBuilder(
-            FakeEntity::class,
-            'default',
-            $definitions,
-            [],
-            [],
-            [],
-            $this->faker
-        );
+        $builder = new FactoryBuilder(FakeEntity::class, 'default', $definitions, [], [], [], $this->faker);
 
         $attributes = $builder->raw();
 
@@ -239,8 +184,8 @@ final class FactoryBuilderTest extends TestCase
             FakeEntity::class => [
                 'default' => function () {
                     return ['name' => 'Test'];
-                },
-            ],
+                }
+            ]
         ];
 
         $builder = new FactoryBuilder(
@@ -260,15 +205,7 @@ final class FactoryBuilderTest extends TestCase
 
     public function testTimesMethodIsFluent(): void
     {
-        $builder = new FactoryBuilder(
-            FakeEntity::class,
-            'default',
-            [],
-            [],
-            [],
-            [],
-            $this->faker
-        );
+        $builder = new FactoryBuilder(FakeEntity::class, 'default', [], [], [], [], $this->faker);
 
         $result = $builder->times(3);
 
@@ -281,25 +218,17 @@ final class FactoryBuilderTest extends TestCase
             FakeEntity::class => [
                 'default' => function () {
                     return ['name' => 'Test'];
-                },
-            ],
+                }
+            ]
         ];
 
         $states = [
             FakeEntity::class => [
-                'admin' => ['role' => 'admin'],
-            ],
+                'admin' => ['role' => 'admin']
+            ]
         ];
 
-        $builder = new FactoryBuilder(
-            FakeEntity::class,
-            'default',
-            $definitions,
-            $states,
-            [],
-            [],
-            $this->faker
-        );
+        $builder = new FactoryBuilder(FakeEntity::class, 'default', $definitions, $states, [], [], $this->faker);
 
         $result = $builder->state('admin');
 
@@ -308,15 +237,7 @@ final class FactoryBuilderTest extends TestCase
 
     public function testConnectionMethodIsFluent(): void
     {
-        $builder = new FactoryBuilder(
-            FakeEntity::class,
-            'default',
-            [],
-            [],
-            [],
-            [],
-            $this->faker
-        );
+        $builder = new FactoryBuilder(FakeEntity::class, 'default', [], [], [], [], $this->faker);
 
         $result = $builder->connection('secondary');
 

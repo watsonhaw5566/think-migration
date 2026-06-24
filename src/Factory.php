@@ -1,5 +1,6 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
 
 namespace think\migration;
 
@@ -8,7 +9,6 @@ use Faker\Generator as Faker;
 
 class Factory implements ArrayAccess
 {
-
     /**
      * The model definitions in the container.
      *
@@ -227,9 +227,7 @@ class Factory implements ArrayAccess
      */
     public function raw(string $class, array $attributes = [], string $name = 'default')
     {
-        return array_merge(
-            call_user_func($this->definitions[$class][$name], $this->faker), $attributes
-        );
+        return array_merge(call_user_func($this->definitions[$class][$name], $this->faker), $attributes);
     }
 
     /**
@@ -242,8 +240,13 @@ class Factory implements ArrayAccess
     public function of(string $class, string $name = 'default')
     {
         return new FactoryBuilder(
-            $class, $name, $this->definitions, $this->states,
-            $this->afterMaking, $this->afterCreating, $this->faker
+            $class,
+            $name,
+            $this->definitions,
+            $this->states,
+            $this->afterMaking,
+            $this->afterCreating,
+            $this->faker
         );
     }
 
@@ -313,5 +316,4 @@ class Factory implements ArrayAccess
     {
         unset($this->definitions[$offset]);
     }
-
 }

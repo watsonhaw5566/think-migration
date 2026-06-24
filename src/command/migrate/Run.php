@@ -1,5 +1,7 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
+
 // +----------------------------------------------------------------------
 // | TopThink [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -23,20 +25,20 @@ class Run extends Migrate
      */
     protected function configure()
     {
-        $this->setName('migrate:run')
+        $this
+            ->setName('migrate:run')
             ->setDescription('Migrate the database')
             ->addOption('--target', '-t', InputOption::VALUE_REQUIRED, 'The version number to migrate to')
             ->addOption('--date', '-d', InputOption::VALUE_REQUIRED, 'The date to migrate to')
             ->setHelp(<<<EOT
-The <info>migrate:run</info> command runs all available migrations, optionally up to a specific version
+                The <info>migrate:run</info> command runs all available migrations, optionally up to a specific version
 
-<info>php think migrate:run</info>
-<info>php think migrate:run -t 20110103081132</info>
-<info>php think migrate:run -d 20110103</info>
-<info>php think migrate:run -v</info>
+                <info>php think migrate:run</info>
+                <info>php think migrate:run -t 20110103081132</info>
+                <info>php think migrate:run -d 20110103</info>
+                <info>php think migrate:run -v</info>
 
-EOT
-            );
+                EOT);
         $this->addOption('connection', 'c', InputOption::VALUE_REQUIRED, 'The database connection to use.');
     }
 
@@ -49,7 +51,7 @@ EOT
     protected function execute(Input $input, Output $output)
     {
         $version = $input->getOption('target');
-        $date    = $input->getOption('date');
+        $date = $input->getOption('date');
 
         // run the migrations
         $start = microtime(true);
@@ -66,7 +68,7 @@ EOT
 
     public function migrateToDateTime(\DateTime $dateTime)
     {
-        $versions   = array_keys($this->getMigrations());
+        $versions = array_keys($this->getMigrations());
         $dateString = $dateTime->format('YmdHis');
 
         $outstandingMigrations = array_filter($versions, function ($version) use ($dateString) {
@@ -83,8 +85,8 @@ EOT
     protected function migrate($version = null)
     {
         $migrations = $this->getMigrations();
-        $versions   = $this->getVersions();
-        $current    = $this->getCurrentVersion();
+        $versions = $this->getVersions();
+        $current = $this->getCurrentVersion();
 
         if (empty($versions) && empty($migrations)) {
             return;
@@ -131,7 +133,7 @@ EOT
     protected function getCurrentVersion()
     {
         $versions = $this->getVersions();
-        $version  = 0;
+        $version = 0;
 
         if (!empty($versions)) {
             $version = end($versions);

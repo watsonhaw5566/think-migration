@@ -1,5 +1,7 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
+
 // +----------------------------------------------------------------------
 // | TopThink [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -23,18 +25,18 @@ class Run extends Seed
      */
     protected function configure()
     {
-        $this->setName('seed:run')
-             ->setDescription('Run database seeders')
-             ->addOption('--seed', '-s', InputOption::VALUE_REQUIRED, 'What is the name of the seeder?')
-             ->setHelp(<<<EOT
-                The <info>seed:run</info> command runs all available or individual seeders
+        $this
+            ->setName('seed:run')
+            ->setDescription('Run database seeders')
+            ->addOption('--seed', '-s', InputOption::VALUE_REQUIRED, 'What is the name of the seeder?')
+            ->setHelp(<<<EOT
+                                The <info>seed:run</info> command runs all available or individual seeders
 
-<info>php think seed:run</info>
-<info>php think seed:run -s UserSeeder</info>
-<info>php think seed:run -v</info>
+                <info>php think seed:run</info>
+                <info>php think seed:run -s UserSeeder</info>
+                <info>php think seed:run -v</info>
 
-EOT
-             );
+                EOT);
         $this->addOption('connection', 'c', InputOption::VALUE_REQUIRED, 'The database connection to use.');
     }
 
@@ -104,6 +106,15 @@ EOT
         }
         $end = microtime(true);
 
-        $this->output->writeln(' ==' . ' <info>' . $seed->getName() . ':</info>' . ' <comment>seeded' . ' ' . sprintf('%.4fs', $end - $start) . '</comment>');
+        $this->output->writeln(
+            ' =='
+            . ' <info>'
+            . $seed->getName()
+            . ':</info>'
+            . ' <comment>seeded'
+            . ' '
+            . sprintf('%.4fs', $end - $start)
+            . '</comment>'
+        );
     }
 }

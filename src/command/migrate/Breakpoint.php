@@ -1,5 +1,7 @@
 <?php
-declare(strict_types=1);
+
+declare(strict_types = 1);
+
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
@@ -21,30 +23,37 @@ class Breakpoint extends Migrate
 {
     protected function configure()
     {
-        $this->setName('migrate:breakpoint')
-             ->setDescription('Manage breakpoints')
-             ->addOption('--target', '-t', InputOption::VALUE_REQUIRED, 'The version number to set or clear a breakpoint against')
-             ->addOption('--remove-all', '-r', InputOption::VALUE_NONE, 'Remove all breakpoints')
-             ->setHelp(<<<EOT
-                 The <info>breakpoint</info> command allows you to set or clear a breakpoint against a specific target to inhibit rollbacks beyond a certain target.
-If no target is supplied then the most recent migration will be used.
-You cannot specify un-migrated targets
+        $this
+            ->setName('migrate:breakpoint')
+            ->setDescription('Manage breakpoints')
+            ->addOption(
+                '--target',
+                '-t',
+                InputOption::VALUE_REQUIRED,
+                'The version number to set or clear a breakpoint against'
+            )
+            ->addOption('--remove-all', '-r', InputOption::VALUE_NONE, 'Remove all breakpoints')
+            ->setHelp(<<<EOT
+                                 The <info>breakpoint</info> command allows you to set or clear a breakpoint against a specific target to inhibit rollbacks beyond a certain target.
+                If no target is supplied then the most recent migration will be used.
+                You cannot specify un-migrated targets
 
-<info>php think migrate:breakpoint</info>
-<info>php think migrate:breakpoint -t 20110103081132</info>
-<info>php think migrate:breakpoint -r</info>
-EOT
-             );
+                <info>php think migrate:breakpoint</info>
+                <info>php think migrate:breakpoint -t 20110103081132</info>
+                <info>php think migrate:breakpoint -r</info>
+                EOT);
         $this->addOption('connection', 'c', InputOption::VALUE_REQUIRED, 'The database connection to use.');
     }
 
     protected function execute(Input $input, Output $output)
     {
-        $version   = $input->getOption('target');
+        $version = $input->getOption('target');
         $removeAll = $input->getOption('remove-all');
 
         if ($version && $removeAll) {
-            throw new \InvalidArgumentException('Cannot toggle a breakpoint and remove all breakpoints at the same time.');
+            throw new \InvalidArgumentException(
+                'Cannot toggle a breakpoint and remove all breakpoints at the same time.'
+            );
         }
 
         // Remove all breakpoints
@@ -59,7 +68,7 @@ EOT
     protected function toggleBreakpoint($version)
     {
         $migrations = $this->getMigrations();
-        $versions   = $this->getVersionLog();
+        $versions = $this->getVersionLog();
 
         if (empty($versions) || empty($migrations)) {
             return;
@@ -67,7 +76,7 @@ EOT
 
         if (null === $version) {
             $lastVersion = end($versions);
-            $version     = $lastVersion['version'];
+            $version = $lastVersion['version'];
         }
 
         if (0 != $version && !isset($migrations[$version])) {
@@ -79,7 +88,16 @@ EOT
 
         $versions = $this->getVersionLog();
 
-        $this->output->writeln(' Breakpoint ' . ($versions[$version]['breakpoint'] ? 'set' : 'cleared') . ' for <info>' . $version . '</info>' . ' <comment>' . $migrations[$version]->getName() . '</comment>');
+        $this->output->writeln(
+            ' Breakpoint '
+            . ( $versions[$version]['breakpoint'] ? 'set' : 'cleared' )
+            . ' for <info>'
+            . $version
+            . '</info>'
+            . ' <comment>'
+            . $migrations[$version]->getName()
+            . '</comment>'
+        );
     }
 
     /**
