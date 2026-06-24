@@ -13,17 +13,23 @@
       "think\\migration\\": "src"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "think\\migration\\Tests\\": "tests"
+    }
+  },
   "require": {
     "php": ">=8.0",
     "robmorgan/phinx": "^0.13.4",
-    "symfony/filesystem": "^5.4 || ^6.0",
-    "symfony/finder": "^5.4 || ^6.0",
+    "symfony/filesystem": "^5.4 || ^6.0 || ^7.0",
+    "symfony/finder": "^5.4 || ^6.0 || ^7.0",
     "topthink/framework": "^8.0",
     "topthink/think-helper": "^3.0.3"
   },
   "require-dev": {
     "composer/composer": "^2.5.8",
-    "fakerphp/faker": "^1.20"
+    "fakerphp/faker": "^1.20",
+    "phpunit/phpunit": "^10.0"
   },
   "config": {
     "sort-packages": true
@@ -32,6 +38,7 @@
     "fakerphp/faker": "Required to use the factory builder (^1.20)."
   },
   "scripts": {
+    "test": "phpunit",
     "lint": "mago lint",
     "format": "mago format",
     "analyze": "mago analyze",
