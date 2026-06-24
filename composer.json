@@ -1,7 +1,7 @@
 {
   "name": "watsonhaw/think-migration",
-  "description": "ThinkPHP 8 数据库迁移扩展：基于 phinx 提供迁移 (migrate)、回滚、数据填充 (seeder) 与模型工厂 (factory) 功能，支持通过 think 命令管理数据库结构变更。",
-  "type": "think-extend",
+  "description": "the ThinkPHP Migration Plugin",
+  "type": "library",
   "keywords": [
     "thinkphp",
     "thinkphp8",
