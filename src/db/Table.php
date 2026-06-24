@@ -120,21 +120,21 @@ class Table extends \Phinx\Db\Table
 
     /**
      * 添加时间戳字段（使用 timestamp 类型）
-     * @param string $createdAt
-     * @param string $updatedAt
+     * @param string $createTime
+     * @param string $updateTime
      * @return $this
      */
-    public function addTimestamps($createdAt = 'create_time', $updatedAt = 'update_time', bool $withTimezone = false)
+    public function addTimestamps($createTime = 'create_time', $updateTime = 'update_time', bool $withTimezone = false)
     {
-        if ($createdAt) {
-            $this->addColumn($createdAt, 'timestamp', [
+        if ($createTime) {
+            $this->addColumn($createTime, 'timestamp', [
                 'null' => false,
                 'default' => 'CURRENT_TIMESTAMP',
                 'timezone' => $withTimezone
             ]);
         }
-        if ($updatedAt) {
-            $this->addColumn($updatedAt, 'timestamp', [
+        if ($updateTime) {
+            $this->addColumn($updateTime, 'timestamp', [
                 'null' => true,
                 'default' => 'CURRENT_TIMESTAMP',
                 'update' => 'CURRENT_TIMESTAMP',
@@ -146,21 +146,20 @@ class Table extends \Phinx\Db\Table
     }
 
     /**
-     * 添加时间字段（使用 datetime 类型，提供更高精度）
-     * @param string $createdAt
-     * @param string $updatedAt
+     * 添加时间字段（使用 datetime 类型，提供更高精度fi* @param string $createTime
+     * @param string $updateTime
      * @return $this
      */
-    public function addDatetimes($createdAt = 'create_time', $updatedAt = 'update_time')
+    public function addDatetimes($createTime = 'create_time', $updateTime = 'update_time')
     {
-        if ($createdAt) {
-            $this->addColumn($createdAt, 'datetime', [
+        if ($createTime) {
+            $this->addColumn($createTime, 'datetime', [
                 'null' => false,
                 'default' => 'CURRENT_TIMESTAMP'
             ]);
         }
-        if ($updatedAt) {
-            $this->addColumn($updatedAt, 'datetime', [
+        if ($updateTime) {
+            $this->addColumn($updateTime, 'datetime', [
                 'null' => true,
                 'default' => 'CURRENT_TIMESTAMP',
                 'update' => 'CURRENT_TIMESTAMP'
