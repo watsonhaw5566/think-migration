@@ -1,6 +1,6 @@
 {
   "name": "watsonhaw/think-migration",
-  "description": "the ThinkPHP Migration Plugin",
+  "description": "The ThinkPHP8 migration extend",
   "type": "library",
   "keywords": [
     "thinkphp",
