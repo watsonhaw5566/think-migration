@@ -4,14 +4,14 @@ declare(strict_types = 1);
 
 namespace think\migration;
 
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputDefinition;
+use Symfony\Component\Console\Input\InputArgument as SymfonyInputArgument;
+use Symfony\Component\Console\Input\InputDefinition as SymfonyInputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputOption as SymfonyInputOption;
 use think\console\Input;
-use think\console\input\Argument;
-use think\console\input\Definition;
-use think\console\input\Option;
+use think\console\input\Argument as ThinkInputArgument;
+use think\console\input\Definition as ThinkInputDefinition;
+use think\console\input\Option as ThinkInputOption;
 
 /**
  * 将 ThinkPHP 的 Input 适配到 Symfony Console InputInterface
@@ -48,9 +48,36 @@ class ConsoleInput implements InputInterface
         return $this->input->getParameterOption($values, $default);
     }
 
-    public function bind(InputDefinition $definition): void
+    /**
+     * 将 Symfony InputDefinition 绑定到 ThinkPHP Input
+     *
+     * 注意：不直接调用 ThinkPHP 的 bind()，因为它会调用 parse() 重新解析 tokens。
+     * 如果 tokens 中包含 ThinkPHP 自身的 --connection 等选项但 Phinx 定义中没有，
+     * 会抛出 "The option does not exist" 异常。
+     * 这里通过反射直接替换 definition，并重置已解析的 arguments/options。
+     */
+    public function bind(SymfonyInputDefinition $definition): void
     {
-        $this->input->bind($this->convertDefinition($definition));
+        $thinkDefinition = $this->convertDefinition($definition);
+
+        $reflection = new \ReflectionObject($this->input);
+
+        if ($reflection->hasProperty('definition')) {
+            $prop = $reflection->getProperty('definition');
+            $prop->setAccessible(true);
+            $prop->setValue($this->input, $thinkDefinition);
+        }
+
+        if ($reflection->hasProperty('arguments')) {
+            $prop = $reflection->getProperty('arguments');
+            $prop->setAccessible(true);
+            $prop->setValue($this->input, []);
+        }
+        if ($reflection->hasProperty('options')) {
+            $prop = $reflection->getProperty('options');
+            $prop->setAccessible(true);
+            $prop->setValue($this->input, []);
+        }
     }
 
     public function validate(): void
@@ -113,12 +140,20 @@ class ConsoleInput implements InputInterface
         return (string) $this->input;
     }
 
+    public function escapeToken(string $token): string
+    {
+        if (method_exists($this->input, 'escapeToken')) {
+            return $this->input->escapeToken($token);
+        }
+        return preg_match('{^[\w-]+$}', $token) ? $token : escapeshellarg($token);
+    }
+
     /**
      * 将 Symfony InputDefinition 转换为 ThinkPHP Definition
      */
-    private function convertDefinition(InputDefinition $symfonyDefinition): Definition
+    private function convertDefinition(SymfonyInputDefinition $symfonyDefinition): ThinkInputDefinition
     {
-        $thinkDefinition = new Definition();
+        $thinkDefinition = new ThinkInputDefinition();
 
         foreach ($symfonyDefinition->getArguments() as $argument) {
             $thinkDefinition->addArgument($this->convertArgument($argument));
@@ -131,17 +166,17 @@ class ConsoleInput implements InputInterface
         return $thinkDefinition;
     }
 
-    private function convertArgument(InputArgument $symfonyArg): Argument
+    private function convertArgument(SymfonyInputArgument $symfonyArg): ThinkInputArgument
     {
         $mode = 0;
         if ($symfonyArg->isRequired()) {
-            $mode |= Argument::REQUIRED;
+            $mode |= ThinkInputArgument::REQUIRED;
         }
         if ($symfonyArg->isArray()) {
-            $mode |= Argument::IS_ARRAY;
+            $mode |= ThinkInputArgument::IS_ARRAY;
         }
 
-        return new Argument(
+        return new ThinkInputArgument(
             $symfonyArg->getName(),
             $mode,
             $symfonyArg->getDescription() ?? '',
@@ -149,23 +184,23 @@ class ConsoleInput implements InputInterface
         );
     }
 
-    private function convertOption(InputOption $symfonyOpt): Option
+    private function convertOption(SymfonyInputOption $symfonyOpt): ThinkInputOption
     {
         $mode = 0;
         if ($symfonyOpt->isValueRequired()) {
-            $mode |= Option::VALUE_REQUIRED;
+            $mode |= ThinkInputOption::VALUE_REQUIRED;
         }
         if ($symfonyOpt->isValueOptional()) {
-            $mode |= Option::VALUE_OPTIONAL;
+            $mode |= ThinkInputOption::VALUE_OPTIONAL;
         }
         if ($symfonyOpt->isArray()) {
-            $mode |= Option::VALUE_IS_ARRAY;
+            $mode |= ThinkInputOption::VALUE_IS_ARRAY;
         }
         if ($mode === 0) {
-            $mode = Option::VALUE_NONE;
+            $mode = ThinkInputOption::VALUE_NONE;
         }
 
-        return new Option(
+        return new ThinkInputOption(
             $symfonyOpt->getName(),
             $symfonyOpt->getShortcut(),
             $mode,
