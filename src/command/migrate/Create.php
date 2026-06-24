@@ -16,6 +16,8 @@ use InvalidArgumentException;
 use RuntimeException;
 use think\console\input\Argument as InputArgument;
 use think\console\input\Option as InputOption;
+use think\console\Input;
+use think\console\Output;
 use think\migration\command\Migrate;
 use think\migration\Creator;
 
