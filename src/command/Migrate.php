@@ -139,8 +139,9 @@ abstract class Migrate extends Command
             $versions = [];
 
             foreach ($phpFiles as $filePath) {
-                if (Util::isValidMigrationFileName(basename($filePath))) {
-                    $version = Util::getVersionFromFileName(basename($filePath));
+                if (!(Util::isValidMigrationFileName(basename($filePath)))) { continue; }
+
+$version = Util::getVersionFromFileName(basename($filePath));
 
                     if (isset($versions[$version])) {
                         throw new \InvalidArgumentException(sprintf(
@@ -186,7 +187,6 @@ abstract class Migrate extends Command
                     }
 
                     $versions[$version] = $migration;
-                }
             }
 
             ksort($versions);

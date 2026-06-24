@@ -95,7 +95,7 @@ class Run extends Migrate
         if (null === $version) {
             $version = max(array_merge($versions, array_keys($migrations)));
         } else {
-            if (0 != $version && !isset($migrations[$version])) {
+            if (0 !== $version && !isset($migrations[$version])) {
                 $this->output->writeln(sprintf('<comment>warning</comment> %s is not a valid version', $version));
                 return;
             }
@@ -112,7 +112,7 @@ class Run extends Migrate
                     break;
                 }
 
-                if (in_array($migration->getVersion(), $versions)) {
+                if (in_array($migration->getVersion(), $versions, true)) {
                     $this->executeMigration($migration, MigrationInterface::DOWN);
                 }
             }
@@ -124,7 +124,7 @@ class Run extends Migrate
                 break;
             }
 
-            if (!in_array($migration->getVersion(), $versions)) {
+            if (!in_array($migration->getVersion(), $versions, true)) {
                 $this->executeMigration($migration, MigrationInterface::UP);
             }
         }

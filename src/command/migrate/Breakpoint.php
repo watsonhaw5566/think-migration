@@ -79,7 +79,7 @@ class Breakpoint extends Migrate
             $version = $lastVersion['version'];
         }
 
-        if (0 != $version && !isset($migrations[$version])) {
+        if (0 !== $version && !isset($migrations[$version])) {
             $this->output->writeln(sprintf('<comment>warning</comment> %s is not a valid version', $version));
             return;
         }

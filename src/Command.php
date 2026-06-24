@@ -82,7 +82,7 @@ abstract class Command extends \think\console\Command
 
         $config = $this->app->config->get("database.connections.{$default}");
 
-        if (0 == $config['deploy']) {
+        if (0 === $config['deploy']) {
             $dbConfig = [
                 'adapter' => $config['type'],
                 'host' => $config['hostname'],

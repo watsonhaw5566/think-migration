@@ -243,7 +243,7 @@ final class TableTest extends TestCase
             }
         }
 
-        $this->assertTrue($found, "Column action '$columnName' not found in pending actions");
+        $this->assertTrue($found, "Column action '{$columnName}' not found in pending actions");
     }
 
     /**
@@ -311,6 +311,6 @@ final class TableTest extends TestCase
             }
         }
 
-        $this->assertTrue($found, "Index action for column '$columnName' not found in pending actions");
+        $this->assertTrue($found, "Index action for column '{$columnName}' not found in pending actions");
     }
 }

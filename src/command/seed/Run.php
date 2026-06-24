@@ -67,9 +67,9 @@ class Run extends Seed
         if (null === $seed) {
             // run all seeders
             foreach ($seeds as $seeder) {
-                if (array_key_exists($seeder->getName(), $seeds)) {
-                    $this->executeSeed($seeder);
-                }
+                if (!(array_key_exists($seeder->getName(), $seeds))) { continue; }
+
+$this->executeSeed($seeder);
             }
         } else {
             // run only one seeder
@@ -84,7 +84,7 @@ class Run extends Seed
     protected function executeSeed(SeedInterface $seed)
     {
         $this->output->writeln('');
-        $this->output->writeln(' ==' . ' <info>' . $seed->getName() . ':</info>' . ' <comment>seeding</comment>');
+        $this->output->writeln(' == <info>' . $seed->getName() . ':</info>' . ' <comment>seeding</comment>');
 
         // Execute the seeder and log the time elapsed.
         $start = microtime(true);

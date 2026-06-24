@@ -79,7 +79,7 @@ class Rollback extends Migrate
         sort($versions);
 
         // Check we have at least 1 migration to revert
-        if (empty($versions) || $version == end($versions)) {
+        if (empty($versions) || $version === end($versions)) {
             $this->output->writeln('<error>No migrations to rollback</error>');
             return;
         }
@@ -101,7 +101,7 @@ class Rollback extends Migrate
 
         // Check the target version exists
         if (0 !== $version && !isset($migrations[$version])) {
-            $this->output->writeln("<error>Target version ($version) not found</error>");
+            $this->output->writeln("<error>Target version ({$version}) not found</error>");
             return;
         }
 
@@ -112,10 +112,10 @@ class Rollback extends Migrate
                 break;
             }
 
-            if (in_array($migration->getVersion(), $versions)) {
+            if (in_array($migration->getVersion(), $versions, true)) {
                 if (
                     isset($versionLog[$migration->getVersion()])
-                    && 0 != $versionLog[$migration->getVersion()]['breakpoint']
+                    && 0 !== $versionLog[$migration->getVersion()]['breakpoint']
                     && !$force
                 ) {
                     $this->output->writeln('<error>Breakpoint reached. Further rollbacks inhibited.</error>');

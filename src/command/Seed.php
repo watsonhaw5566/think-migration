@@ -43,9 +43,9 @@ abstract class Seed extends Command
             $seeds = [];
 
             foreach ($phpFiles as $filePath) {
-                if (Util::isValidSeedFileName(basename($filePath))) {
-                    // convert the filename to a class name
-                    $class = pathinfo($filePath, PATHINFO_FILENAME);
+                if (!(Util::isValidSeedFileName(basename($filePath)))) { continue; }
+
+$class = pathinfo($filePath, PATHINFO_FILENAME);
                     $fileNames[$class] = basename($filePath);
 
                     // load the seed file
@@ -72,7 +72,6 @@ abstract class Seed extends Command
                     }
 
                     $seeds[$class] = $seed;
-                }
             }
 
             ksort($seeds);
