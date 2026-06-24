@@ -4,7 +4,8 @@ use Faker\Generator as Faker;
 use think\migration\Factory;
 
 /** @var Factory $factory */
-$factory->define("ModelClass", function (Faker $faker) {
+$factory->define("ModelClass", function (Faker $faker): array
+    {
     return [
         //
     ];
