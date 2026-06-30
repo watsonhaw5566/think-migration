@@ -34,7 +34,7 @@ class Creator
         }
 
         // Compute the file path
-        $fileName = Util::mapClassNameToFileName($className);
+        $fileName = Util::getCurrentTimestamp() . Util::toSnakeCase($className) . '.php';
         $filePath = $path . DIRECTORY_SEPARATOR . $fileName;
 
         if (is_file($filePath)) {
