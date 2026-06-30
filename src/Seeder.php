@@ -14,6 +14,7 @@ declare(strict_types = 1);
 namespace think\migration;
 
 use Phinx\Seed\AbstractSeed;
+use think\App;
 
 class Seeder extends AbstractSeed
 {
@@ -22,6 +23,15 @@ class Seeder extends AbstractSeed
      */
     public function factory()
     {
-        return app(Factory::class);
+        if (function_exists('app')) {
+            return app(Factory::class);
+        }
+
+        $app = class_exists(App::class) ? App::getInstance() : null;
+        if ($app !== null && method_exists($app, 'make')) {
+            return $app->make(Factory::class);
+        }
+
+        throw new \RuntimeException('Unable to resolve Factory: application container not available.');
     }
 }

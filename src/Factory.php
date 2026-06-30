@@ -276,9 +276,8 @@ class Factory implements ArrayAccess
      * Determine if the given offset exists.
      *
      * @param string $offset
-     * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->definitions[$offset]);
     }
@@ -287,9 +286,8 @@ class Factory implements ArrayAccess
      * Get the value of the given offset.
      *
      * @param string $offset
-     * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->make($offset);
     }
@@ -299,9 +297,8 @@ class Factory implements ArrayAccess
      *
      * @param string   $offset
      * @param callable $value
-     * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->define($offset, $value);
     }
@@ -310,9 +307,8 @@ class Factory implements ArrayAccess
      * Unset the value at the given offset.
      *
      * @param string $offset
-     * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->definitions[$offset]);
     }
