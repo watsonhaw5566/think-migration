@@ -15,6 +15,7 @@ composer require watsonhaw/think-migration
 ## 功能特性
 
 - **数据库迁移**：使用数据库无关的 PHP 代码编写迁移脚本，支持自动回滚。
+- **反向生成迁移**：从已有的数据库结构反向生成迁移文件，适用于已有项目的迁移改造。
 - **数据填充**：在数据库创建后填充初始数据，支持 Faker 随机数据生成。
 - **模型工厂**：通过 Factory 模式快速生成测试数据。
 - **多数据库支持**：可在多个数据库连接之间切换执行迁移。
@@ -107,6 +108,36 @@ php think migrate:status
 ```bash
 php think migrate:breakpoint -t 20240101000000
 ```
+
+### 4. 从现有数据库反向生成迁移
+
+如果你正在将一个已有数据库的项目改造为使用迁移，可以使用 `migrate:reverse` 命令从现有数据库结构反向生成迁移文件。
+
+为每张表生成单独的迁移文件：
+
+```bash
+php think migrate:reverse
+```
+
+将所有表生成在一个迁移文件中（适用于新项目初始化）：
+
+```bash
+php think migrate:reverse -a
+```
+
+只为指定的表生成迁移：
+
+```bash
+php think migrate:reverse -t users
+```
+
+使用指定的数据库连接：
+
+```bash
+php think migrate:reverse -c production
+```
+
+> **注意**：自动生成的迁移文件可能需要手动调整，特别是外键关系、某些特殊字段类型及索引配置。建议在生成后仔细检查并测试迁移文件的正确性。
 
 ## 数据填充（Seeding）
 
@@ -247,6 +278,7 @@ public function change()
 | `php think migrate:rollback [-t <version>]` | 回滚迁移 |
 | `php think migrate:status` | 显示迁移状态 |
 | `php think migrate:breakpoint [-t <version>]` | 设置/清除断点 |
+| `php think migrate:reverse [-a] [-t <table>]` | 从现有数据库反向生成迁移文件 |
 | `php think seed:create <name>` | 创建新的填充文件 |
 | `php think seed:run [-s <name>]` | 执行数据填充 |
 | `php think factory:create <name>` | 创建新的模型工厂 |
