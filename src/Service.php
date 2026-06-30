@@ -19,6 +19,7 @@ use Faker\Generator as FakerGenerator;
 use think\migration\command\factory\Create as FactoryCreate;
 use think\migration\command\migrate\Breakpoint as MigrateBreakpoint;
 use think\migration\command\migrate\Create as MigrateCreate;
+use think\migration\command\migrate\Reverse as MigrateReverse;
 use think\migration\command\migrate\Rollback as MigrateRollback;
 use think\migration\command\migrate\Run as MigrateRun;
 use think\migration\command\migrate\Status as MigrateStatus;
@@ -51,6 +52,7 @@ class Service extends \think\Service
             MigrateRollback::class,
             MigrateBreakpoint::class,
             MigrateStatus::class,
+            MigrateReverse::class,
             SeedCreate::class,
             SeedRun::class,
             FactoryCreate::class
